@@ -11,11 +11,17 @@ class Board():
         self.secondaryQueue = Queue()
         self.secondaryQueue.shuffle(10)
 
-    def addSongOfDirectory(self, dir):
-        listFiles = listFile(dir)
+    def addSongOfDirectory(self, directory):
+        listFiles = listFile(directory)
         for file in listFiles:
             song = Song(file)
             self.secondaryQueue.add(song)
+
+    def getPrimaryQueue(self):
+        return self.primaryQueue
+
+    def getSecondaryQueue(self):
+        return self.secondaryQueue
 
     def _getSongAt(self, queue, index):
         return queue.getElementAt(index)
@@ -39,7 +45,7 @@ class Board():
         if song:
             destQueue.add(song)
 
-    def addSongToPrimary(self, index):
+    def moveSongToPrimary(self, index):
         self._moveSongOfQueue(self.secondaryQueue, self.primaryQueue, index)
 
     def __repr__(self):
