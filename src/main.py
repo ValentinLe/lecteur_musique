@@ -1,9 +1,8 @@
 
-from util.ListFile import listFile
-from model.Song import Song
+from model.Board import Board
 
 if __name__ == "__main__":
-    l = listFile("C:/Users/Val/Desktop/Dossier/musiques")
-    for file in l:
-        song = Song(file)
-        print(song)
+    path = "C:/Users/Val/Desktop/Dossier/testLecteur"
+    b = Board()
+    b.addSongOfDirectory(path)
+    print(b)

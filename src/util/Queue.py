@@ -11,11 +11,22 @@ class Queue():
         self.queue.append(elt)
         self.length += 1
 
-    def remove(self):
+    def getElementAt(self, index):
+        if self.isInIndex(index):
+            return self.queue[index]
+        return None
+
+    def isEmpty(self):
+        return self.length == 0
+
+    def isInIndex(self, index):
+        return index >= 0 and index < self.length
+
+    def remove(self, index=0):
         elt = None
-        if self.length > 0:
-            elt = self.queue[0]
-            del self.queue[0]
+        if not self.isEmpty() and self.isInIndex(index):
+            elt = self.getElementAt(index)
+            del self.queue[index]
             self.length -= 1
         return elt
 

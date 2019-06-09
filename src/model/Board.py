@@ -1,0 +1,46 @@
+
+from util.Queue import Queue
+from util.ListFile import listFile
+from .Song import Song
+
+
+class Board():
+    def __init__(self):
+        self.currentSong = None
+        self.primaryQueue = Queue()
+        self.secondaryQueue = Queue()
+        self.secondaryQueue.shuffle(10)
+
+    def addSongOfDirectory(self, dir):
+        listFiles = listFile(dir)
+        for file in listFiles:
+            song = Song(file)
+            self.secondaryQueue.add(song)
+
+    def _getSongAt(self, queue, index):
+        return queue.getElementAt(index)
+
+    def getSongPrimaryAt(self, index):
+        return self._getSongAt(self.primaryQueue, index)
+
+    def getSongSecondaryAt(self, index):
+        return self._getSongAt(self.secondaryQueue, index)
+
+    def nextSong(self):
+        if self.currentSong:
+            self.secondaryQueue.add(self.currentSong)
+        if not self.primaryQueue.isEmpty():
+            self.currentSong = self.primaryQueue.remove()
+        else:
+            self.currentSong = self.secondaryQueue.remove()
+
+    def _moveSongOfQueue(self, startQueue, destQueue, indexStart):
+        song = startQueue.remove(indexStart)
+        if song:
+            destQueue.add(song)
+
+    def addSongToPrimary(self, index):
+        self._moveSongOfQueue(self.secondaryQueue, self.primaryQueue, index)
+
+    def __repr__(self):
+        return "Board :\ncurrent=" + str(self.currentSong) + "\nprimary : \n" + str(self.primaryQueue) + "\n\nsecondary : \n" + str(self.secondaryQueue)
