@@ -9,7 +9,6 @@ class Board():
         self.currentSong = None
         self.primaryQueue = Queue()
         self.secondaryQueue = Queue()
-        self.secondaryQueue.shuffle(10)
 
     def addSongOfDirectory(self, directory):
         listFiles = listFile(directory)

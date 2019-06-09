@@ -6,10 +6,13 @@ class QueueSong(QWidget):
     def __init__(self, queue):
         QWidget.__init__(self)
 
-        listSong = QListWidget()
+        self.listSong = QListWidget()
         for k in range(queue.size()):
-            listSong.addItem(queue.getElementAt(k).getName())
+            self.listSong.addItem(queue.getElementAt(k).getName())
 
         layout = QGridLayout()
         self.setLayout(layout)
-        layout.addWidget(listSong)
+        layout.addWidget(self.listSong)
+
+    def getIndexSelected(self):
+        return self.listSong.currentRow()

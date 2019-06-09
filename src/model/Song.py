@@ -18,4 +18,4 @@ class Song():
         return self.filename == other.getFilename()
 
     def __repr__(self):
-        return "Song : " + self.filename
+        return "\_" + self.filename + "_/"

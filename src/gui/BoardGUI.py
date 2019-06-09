@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QWidget, QGridLayout
+from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton
 from .QueueSong import QueueSong
 from model.Board import Board
 
@@ -9,14 +9,25 @@ class BoardGUI(QWidget):
         QWidget.__init__(self)
 
         path = "C:/Users/Val/Desktop/Dossier/testLecteur"
-        b = Board()
-        b.addSongOfDirectory(path)
-        b.moveSongToPrimary(1)
-        b.moveSongToPrimary(0)
-        primaryQueue = QueueSong(b.getPrimaryQueue())
-        secondaryQueue = QueueSong(b.getSecondaryQueue())
+        self.b = Board()
+        self.b.addSongOfDirectory(path)
+        self.b.secondaryQueue.shuffle(10)
+        self.b.moveSongToPrimary(1)
+        self.b.moveSongToPrimary(0)
+        self.primaryQueue = QueueSong(self.b.getPrimaryQueue())
+        self.secondaryQueue = QueueSong(self.b.getSecondaryQueue())
+
+        bMove = QPushButton("<<<")
+        bMove.clicked.connect(self.moveToPrimary)
 
         layout = QGridLayout()
         self.setLayout(layout)
-        layout.addWidget(primaryQueue, 0, 0)
-        layout.addWidget(secondaryQueue, 0, 1)
+        layout.addWidget(self.primaryQueue, 0, 0)
+        layout.addWidget(bMove, 0, 1)
+        layout.addWidget(self.secondaryQueue, 0, 2)
+
+    def moveToPrimary(self):
+        indexSelected = self.secondaryQueue.getIndexSelected()
+        if indexSelected >= 0:
+            self.b.moveSongToPrimary(indexSelected)
+            print(self.b)
