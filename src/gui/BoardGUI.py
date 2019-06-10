@@ -1,6 +1,7 @@
 
 from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton
 from .QueueSong import QueueSong
+from .PlayerSound import PlayerSound
 from model.Board import Board
 
 
@@ -20,11 +21,14 @@ class BoardGUI(QWidget):
         bMove = QPushButton("<<<")
         bMove.clicked.connect(self.moveToPrimary)
 
+        player = PlayerSound()
+
         layout = QGridLayout()
         self.setLayout(layout)
         layout.addWidget(self.primaryQueue, 0, 0)
         layout.addWidget(bMove, 0, 1)
         layout.addWidget(self.secondaryQueue, 0, 2)
+        layout.addWidget(player, 1, 1)
 
     def moveToPrimary(self):
         indexSelected = self.secondaryQueue.getIndexSelected()
