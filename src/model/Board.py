@@ -1,4 +1,5 @@
 
+from mutagen.id3 import ID3, ID3NoHeaderError
 from util.Queue import Queue
 from util.ListFile import listFile
 from observer.ListenableModel import ListenableModel
@@ -16,6 +17,13 @@ class Board(ListenableModel):
         listFiles = listFile(directory)
         for file in listFiles:
             song = Song(directory, file)
+            id3 = ID3(song.getFullFilename())
+            try:
+                id3 = ID3(song.getFullFilename())
+                author = id3["TPE1"].text[0]
+                song.setAuthor(author)
+            except ID3NoHeaderError:
+                pass
             self.secondaryQueue.add(song)
         self.firechange()
 
@@ -50,6 +58,7 @@ class Board(ListenableModel):
     def moveSongOfQueue(self, startQueue, destQueue, indexStart):
         song = startQueue.remove(indexStart)
         if song:
+
             destQueue.add(song)
             self.firechange()
 

@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton
+from PyQt5.QtWidgets import QWidget, QGridLayout
 from model.Board import Board
 from .QueueSong import QueueSong
 from .PlayerSound import PlayerSound

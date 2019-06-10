@@ -1,10 +1,14 @@
 
 class Song():
-    def __init__(self, path, filename):
+    def __init__(self, path, filename, author="Unknown"):
         self.path = path
         self.filename = filename
         self.name = filename.split(".")[0]
         self.format = filename.split(".")[1]
+        self.author = author
+
+    def getAuthor(self):
+        return self.author
 
     def getFullFilename(self):
         return self.path + "/" + self.filename
@@ -17,6 +21,9 @@ class Song():
 
     def getFormat(self):
         return self.format
+
+    def setAuthor(self, author):
+        self.author = author
 
     def __eq__(self, other):
         return self.filename == other.getFilename()
