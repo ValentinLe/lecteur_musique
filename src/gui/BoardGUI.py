@@ -13,30 +13,25 @@ class BoardGUI(QWidget):
         self.b = Board()
         self.b.addSongOfDirectory(path)
         self.b.secondaryQueue.shuffle(10)
-        self.b.moveSongToPrimary(1)
-        self.b.moveSongToPrimary(0)
-        self.b.nextSong()
-        self.primaryQueue = QueueSong(self.b.getPrimaryQueue())
-        self.secondaryQueue = QueueSong(self.b.getSecondaryQueue())
-
-        bMove = QPushButton("<<<")
-        bMove.clicked.connect(self.moveToPrimary)
-
-        self.player = PlayerSound(self.b)
+        self.primaryQueue = QueueSong(
+            self.b, self.b.getPrimaryQueue(), self.b.getSecondaryQueue())
+        self.secondaryQueue = QueueSong(
+            self.b, self.b.getSecondaryQueue(), self.b.getPrimaryQueue())
 
         self.b.addListener(self.primaryQueue)
         self.b.addListener(self.secondaryQueue)
+
+        self.b.nextSong()
+        self.player = PlayerSound(self.b)
         self.b.addListener(self.player)
 
         layout = QGridLayout()
         self.setLayout(layout)
         layout.addWidget(self.primaryQueue, 0, 0)
-        layout.addWidget(bMove, 0, 1)
-        layout.addWidget(self.secondaryQueue, 0, 2)
+        layout.addWidget(self.secondaryQueue, 0, 1)
         layout.addWidget(self.player, 1, 1)
 
     def moveToPrimary(self):
         indexSelected = self.secondaryQueue.getIndexSelected()
         if indexSelected >= 0:
             self.b.moveSongToPrimary(indexSelected)
-            print(self.b)

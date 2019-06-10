@@ -1,5 +1,4 @@
 
-from model.Board import Board
 import sys
 from PyQt5.QtWidgets import QApplication
 from gui.MainWindow import MainWindow

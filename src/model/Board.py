@@ -1,8 +1,8 @@
 
 from util.Queue import Queue
 from util.ListFile import listFile
-from .Song import Song
 from observer.ListenableModel import ListenableModel
+from .Song import Song
 
 
 class Board(ListenableModel):
@@ -55,6 +55,9 @@ class Board(ListenableModel):
 
     def moveSongToPrimary(self, index):
         self.moveSongOfQueue(self.secondaryQueue, self.primaryQueue, index)
+
+    def moveSongToSecondary(self, index):
+        self.moveSongOfQueue(self.primaryQueue, self.secondaryQueue, index)
 
     def __repr__(self):
         return "Board :\ncurrent=" + str(self.currentSong) + "\nprimary : \n" + str(self.primaryQueue) + "\n\nsecondary : \n" + str(self.secondaryQueue)
