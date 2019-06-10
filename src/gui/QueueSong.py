@@ -7,18 +7,9 @@ class QueueSong(QWidget):
     def __init__(self, queue):
         QWidget.__init__(self)
 
+        self.queue = queue
         self.listSong = QListWidget()
-        for k in range(queue.size()):
-            song = queue.getElementAt(k)
-            author = "Unknown"
-            try:
-                id3 = ID3(
-                    "C:/Users/Val/Desktop/Dossier/testLecteur/" + song.getFilename())
-                author = id3["TPE1"].text[0]
-            except ID3NoHeaderError:
-                pass
-            self.listSong.addItem(queue.getElementAt(
-                k).getName() + " - " + author)
+        self.update()
 
         layout = QGridLayout()
         self.setLayout(layout)
@@ -26,3 +17,17 @@ class QueueSong(QWidget):
 
     def getIndexSelected(self):
         return self.listSong.currentRow()
+
+    def update(self):
+        self.listSong.clear()
+        for k in range(self.queue.size()):
+            song = self.queue.getElementAt(k)
+            author = "Unknown"
+            try:
+                id3 = ID3(
+                    "C:/Users/Val/Desktop/Dossier/testLecteur/" + song.getFilename())
+                author = id3["TPE1"].text[0]
+            except ID3NoHeaderError:
+                pass
+            self.listSong.addItem(self.queue.getElementAt(
+                k).getName() + " - " + author)

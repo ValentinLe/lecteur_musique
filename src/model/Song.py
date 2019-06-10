@@ -1,9 +1,13 @@
 
 class Song():
-    def __init__(self, filename):
+    def __init__(self, path, filename):
+        self.path = path
         self.filename = filename
         self.name = filename.split(".")[0]
         self.format = filename.split(".")[1]
+
+    def getFullFilename(self):
+        return self.path + "/" + self.filename
 
     def getFilename(self):
         return self.filename
@@ -18,4 +22,4 @@ class Song():
         return self.filename == other.getFilename()
 
     def __repr__(self):
-        return "\_" + self.filename + "_/"
+        return "<_" + self.filename + "_>"

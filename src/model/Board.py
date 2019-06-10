@@ -2,10 +2,12 @@
 from util.Queue import Queue
 from util.ListFile import listFile
 from .Song import Song
+from observer.ListenableModel import ListenableModel
 
 
-class Board():
+class Board(ListenableModel):
     def __init__(self):
+        ListenableModel.__init__(self)
         self.currentSong = None
         self.primaryQueue = Queue()
         self.secondaryQueue = Queue()
@@ -13,8 +15,12 @@ class Board():
     def addSongOfDirectory(self, directory):
         listFiles = listFile(directory)
         for file in listFiles:
-            song = Song(file)
+            song = Song(directory, file)
             self.secondaryQueue.add(song)
+        self.firechange()
+
+    def getCurrentSong(self):
+        return self.currentSong
 
     def getPrimaryQueue(self):
         return self.primaryQueue
@@ -22,14 +28,14 @@ class Board():
     def getSecondaryQueue(self):
         return self.secondaryQueue
 
-    def _getSongAt(self, queue, index):
+    def getSongAt(self, queue, index):
         return queue.getElementAt(index)
 
     def getSongPrimaryAt(self, index):
-        return self._getSongAt(self.primaryQueue, index)
+        return self.getSongAt(self.primaryQueue, index)
 
     def getSongSecondaryAt(self, index):
-        return self._getSongAt(self.secondaryQueue, index)
+        return self.getSongAt(self.secondaryQueue, index)
 
     def nextSong(self):
         if self.currentSong:
@@ -38,14 +44,17 @@ class Board():
             self.currentSong = self.primaryQueue.remove()
         else:
             self.currentSong = self.secondaryQueue.remove()
+        self.firechange()
+        return self.currentSong
 
-    def _moveSongOfQueue(self, startQueue, destQueue, indexStart):
+    def moveSongOfQueue(self, startQueue, destQueue, indexStart):
         song = startQueue.remove(indexStart)
         if song:
             destQueue.add(song)
+            self.firechange()
 
     def moveSongToPrimary(self, index):
-        self._moveSongOfQueue(self.secondaryQueue, self.primaryQueue, index)
+        self.moveSongOfQueue(self.secondaryQueue, self.primaryQueue, index)
 
     def __repr__(self):
         return "Board :\ncurrent=" + str(self.currentSong) + "\nprimary : \n" + str(self.primaryQueue) + "\n\nsecondary : \n" + str(self.secondaryQueue)
