@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QSlider
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSlider, QLayout
 from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 
@@ -9,8 +9,12 @@ class PlayerSound(QWidget):
         QWidget.__init__(self)
 
         self.board = board
+        currentSong = self.board.getCurrentSong()
         self.player = QMediaPlayer()
-        self.songName = QLabel(self.board.getCurrentSong().getName())
+        self.songName = QLabel(currentSong.getName())
+        self.songName.setMinimumWidth(200)
+        self.songName.setMaximumWidth(200)
+        self.songAuthor = QLabel(currentSong.getAuthor())
         self.setSongInPlayer()
         self.player.mediaStatusChanged.connect(self.mediaFinished)
         self.player.durationChanged.connect(self.changeSliderDuration)
@@ -22,22 +26,49 @@ class PlayerSound(QWidget):
         bNext.clicked.connect(self.nextSong)
 
         self.sliderSong = QSlider(Qt.Horizontal)
-        self.sliderSong.valueChanged.connect(self.changePosition)
+        self.sliderSong.sliderMoved.connect(self.changePosition)
+        self.labCurrentDuration = QLabel("0:00")
+        self.labMaxDuration = QLabel(
+            self.getStrMinutesDuration(self.player.duration()))
 
         self.labelVolume = QLabel("100")
+        self.labelVolume.setAlignment(Qt.AlignCenter)
         self.volumeSlider = QSlider(Qt.Horizontal)
+        self.volumeSlider.setMinimumWidth(200)
+        self.volumeSlider.setMaximumWidth(200)
         self.volumeSlider.setMaximum(100)
         self.volumeSlider.setValue(100)
         self.volumeSlider.valueChanged.connect(self.changeVolume)
 
-        layout = QGridLayout()
+        # position elements
+
+        leftInfoSong = QVBoxLayout()
+        leftInfoSong.addWidget(self.songName)
+        leftInfoSong.addWidget(self.songAuthor)
+
+        centerPlayer = QVBoxLayout()
+        buttonsPlayer = QHBoxLayout()
+        buttonsPlayer.addWidget(self.bPlay)
+        buttonsPlayer.addWidget(bNext)
+        centerPlayer.addLayout(buttonsPlayer)
+        sliderWithTime = QHBoxLayout()
+        sliderWithTime.addWidget(self.labCurrentDuration)
+        sliderWithTime.addWidget(self.sliderSong)
+        sliderWithTime.addWidget(self.labMaxDuration)
+        centerPlayer.addLayout(sliderWithTime)
+
+        rightVolume = QVBoxLayout()
+        rightVolume.addWidget(self.labelVolume)
+        rightVolume.addWidget(self.volumeSlider)
+
+        # positionnement global
+        layout = QHBoxLayout()
         self.setLayout(layout)
-        layout.addWidget(self.songName, 0, 0)
-        layout.addWidget(self.bPlay, 0, 1)
-        layout.addWidget(bNext, 0, 2)
-        layout.addWidget(self.volumeSlider, 0, 3)
-        layout.addWidget(self.labelVolume, 1, 3)
-        layout.addWidget(self.sliderSong, 1, 0)
+        layout.addLayout(leftInfoSong)
+        layout.addStretch()
+        layout.addLayout(centerPlayer)
+        layout.addStretch()
+        layout.addLayout(rightVolume)
 
     def mediaFinished(self, status):
         if status == QMediaPlayer.EndOfMedia:
@@ -70,6 +101,7 @@ class PlayerSound(QWidget):
 
     def changeSliderPosition(self, position):
         self.sliderSong.setValue(position)
+        self.update()
 
     def changeSliderDuration(self, duration):
         self.sliderSong.setMaximum(duration)
@@ -79,6 +111,21 @@ class PlayerSound(QWidget):
         self.player.setVolume(valueVolume)
         self.labelVolume.setText(str(valueVolume))
 
+    def getStrMinutesDuration(self, millis):
+        secondes = millis // 1000
+        minutes = secondes // 60
+        secondes = secondes % 60
+        res = str(minutes) + ":"
+        if secondes < 10:
+            res += "0"
+        res += str(secondes)
+        return res
+
     def update(self):
         song = self.board.getCurrentSong()
         self.songName.setText(song.getName())
+        self.songAuthor.setText(song.getAuthor())
+        self.labCurrentDuration.setText(
+            self.getStrMinutesDuration(self.player.position()))
+        self.labMaxDuration.setText(
+            self.getStrMinutesDuration(self.player.duration()))
