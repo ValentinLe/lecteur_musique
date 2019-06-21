@@ -1,5 +1,6 @@
 
 from mutagen.id3 import ID3, ID3NoHeaderError
+from mutagen.mp3 import MP3
 from util.Queue import Queue
 from util.ListFile import listFile
 from observer.ListenableModel import ListenableModel
@@ -17,13 +18,8 @@ class Board(ListenableModel):
         listFiles = listFile(directory)
         for file in listFiles:
             song = Song(directory, file)
-            id3 = ID3(song.getFullFilename())
-            try:
-                id3 = ID3(song.getFullFilename())
-                author = id3["TPE1"].text[0]
-                song.setAuthor(author)
-            except ID3NoHeaderError:
-                pass
+            audio = MP3(song.getFullFilename())
+            song.setDuration(int(audio.info.length * 1000))
             self.secondaryQueue.add(song)
         self.firechange()
 

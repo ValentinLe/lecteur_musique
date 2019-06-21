@@ -15,9 +15,7 @@ class PlayerSound(QWidget):
         self.songName.setMinimumWidth(200)
         self.songName.setMaximumWidth(200)
         self.songAuthor = QLabel(currentSong.getAuthor())
-        self.setSongInPlayer()
         self.player.mediaStatusChanged.connect(self.mediaFinished)
-        self.player.durationChanged.connect(self.changeSliderDuration)
         self.player.positionChanged.connect(self.changeSliderPosition)
 
         self.bPlay = QPushButton("Play")
@@ -28,8 +26,7 @@ class PlayerSound(QWidget):
         self.sliderSong = QSlider(Qt.Horizontal)
         self.sliderSong.sliderMoved.connect(self.changePosition)
         self.labCurrentDuration = QLabel("0:00")
-        self.labMaxDuration = QLabel(
-            self.getStrMinutesDuration(self.player.duration()))
+        self.labMaxDuration = QLabel("0:00")
 
         self.labelVolume = QLabel("100")
         self.labelVolume.setAlignment(Qt.AlignCenter)
@@ -39,6 +36,8 @@ class PlayerSound(QWidget):
         self.volumeSlider.setMaximum(100)
         self.volumeSlider.setValue(100)
         self.volumeSlider.valueChanged.connect(self.changeVolume)
+
+        self.setSongInPlayer()
 
         # position elements
 
@@ -93,25 +92,22 @@ class PlayerSound(QWidget):
         song = self.board.getCurrentSong()
         url = QUrl.fromLocalFile(song.getFullFilename())
         self.player.setMedia(QMediaContent(url))
+        self.sliderSong.setMaximum(song.getDuration())
+        self.labMaxDuration.setText(self.getStrDuration(song.getDuration()))
 
     def changePosition(self, position):
-        self.player.pause()
         self.player.setPosition(position)
-        self.player.play()
 
     def changeSliderPosition(self, position):
         self.sliderSong.setValue(position)
         self.update()
-
-    def changeSliderDuration(self, duration):
-        self.sliderSong.setMaximum(duration)
 
     def changeVolume(self):
         valueVolume = self.volumeSlider.value()
         self.player.setVolume(valueVolume)
         self.labelVolume.setText(str(valueVolume))
 
-    def getStrMinutesDuration(self, millis):
+    def getStrDuration(self, millis):
         secondes = millis // 1000
         minutes = secondes // 60
         secondes = secondes % 60
@@ -126,6 +122,4 @@ class PlayerSound(QWidget):
         self.songName.setText(song.getName())
         self.songAuthor.setText(song.getAuthor())
         self.labCurrentDuration.setText(
-            self.getStrMinutesDuration(self.player.position()))
-        self.labMaxDuration.setText(
-            self.getStrMinutesDuration(self.player.duration()))
+            self.getStrDuration(self.player.position()))
