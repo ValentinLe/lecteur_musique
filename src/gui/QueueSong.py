@@ -22,17 +22,26 @@ class QueueSong(QListWidget):
         self.board.moveSongOfQueue(self.queue, self.otherQueue, index)
 
     def keyPressEvent(self, e):
+        indexSelected = self.getIndexSelected()
+        if e.key() == Qt.Key_Return:
+            self.moveSong()
         if e.modifiers() & Qt.ControlModifier:
-            indexSelected = self.getIndexSelected()
             indexTarget = indexSelected
             if e.key() == Qt.Key_Up:
                 indexTarget -= 1
             elif e.key() == Qt.Key_Down:
                 indexTarget += 1
-
             if indexTarget != indexSelected:
                 self.board.switchSong(self.queue, indexSelected, indexTarget)
-                self.setCurrentRow(indexSelected)
+            if self.queue == self.board.getPrimaryQueue():
+                keyMove = Qt.Key_Right
+            else:
+                keyMove = Qt.Key_Left
+            if e.key() == keyMove:
+                self.moveSong()
+                if indexSelected + 1 > self.count():
+                    indexSelected -= 1
+        self.setCurrentRow(indexSelected)
         QListWidget.keyPressEvent(self, e)
 
     def update(self):
