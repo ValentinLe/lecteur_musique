@@ -54,7 +54,6 @@ class Board(ListenableModel):
     def moveSongOfQueue(self, startQueue, destQueue, indexStart):
         song = startQueue.remove(indexStart)
         if song:
-
             destQueue.add(song)
             self.firechange()
 
@@ -63,6 +62,10 @@ class Board(ListenableModel):
 
     def moveSongToSecondary(self, index):
         self.moveSongOfQueue(self.primaryQueue, self.secondaryQueue, index)
+
+    def switchSong(self, queue, start, end):
+        queue.switchElements(start, end)
+        self.firechange()
 
     def __repr__(self):
         return "Board :\ncurrent=" + str(self.currentSong) + "\nprimary : \n" + str(self.primaryQueue) + "\n\nsecondary : \n" + str(self.secondaryQueue)

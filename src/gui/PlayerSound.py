@@ -1,7 +1,8 @@
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSlider, QLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSlider
 from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+from util.StringDuration import getStrDuration
 
 
 class PlayerSound(QWidget):
@@ -93,7 +94,7 @@ class PlayerSound(QWidget):
         url = QUrl.fromLocalFile(song.getFullFilename())
         self.player.setMedia(QMediaContent(url))
         self.sliderSong.setMaximum(song.getDuration())
-        self.labMaxDuration.setText(self.getStrDuration(song.getDuration()))
+        self.labMaxDuration.setText(getStrDuration(song.getDuration()))
 
     def changePosition(self, position):
         self.player.setPosition(position)
@@ -107,19 +108,9 @@ class PlayerSound(QWidget):
         self.player.setVolume(valueVolume)
         self.labelVolume.setText(str(valueVolume))
 
-    def getStrDuration(self, millis):
-        secondes = millis // 1000
-        minutes = secondes // 60
-        secondes = secondes % 60
-        res = str(minutes) + ":"
-        if secondes < 10:
-            res += "0"
-        res += str(secondes)
-        return res
-
     def update(self):
         song = self.board.getCurrentSong()
         self.songName.setText(song.getName())
         self.songAuthor.setText(song.getAuthor())
         self.labCurrentDuration.setText(
-            self.getStrDuration(self.player.position()))
+            getStrDuration(self.player.position()))

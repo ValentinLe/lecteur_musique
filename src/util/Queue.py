@@ -30,6 +30,10 @@ class Queue():
             self.length -= 1
         return elt
 
+    def setElementAt(self, element, index):
+        if self.isInIndex(index):
+            self.queue[index] = element
+
     def size(self):
         return self.length
 
@@ -38,6 +42,12 @@ class Queue():
         while i < nb:
             random.shuffle(self.queue)
             i += 1
+
+    def switchElements(self, firstIndex, secondIndex):
+        firstElement = self.getElementAt(firstIndex)
+        secondElement = self.getElementAt(secondIndex)
+        self.setElementAt(secondElement, firstIndex)
+        self.setElementAt(firstElement, secondIndex)
 
     def __repr__(self):
         return "Queue, size = " + str(self.length) + "\n" + str(self.queue)

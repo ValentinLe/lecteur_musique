@@ -9,6 +9,7 @@ def mainGUI():
 
     window = MainWindow()
     window.showMaximized()
+    # window.show()
 
     sys.exit(app.exec_())
 
