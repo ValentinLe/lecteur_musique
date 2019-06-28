@@ -4,6 +4,7 @@ from PyQt5.Qt import Qt
 from model.Board import Board
 from .QueueSong import QueueSong
 from .PlayerSound import PlayerSound
+from .SearchSong import SearchSong
 
 
 class BoardGUI(QWidget):
@@ -14,6 +15,9 @@ class BoardGUI(QWidget):
         self.b = Board()
         self.b.addSongOfDirectory(path)
         self.b.secondaryQueue.shuffle(10)
+
+        self.searchSong = SearchSong(self.b)
+
         self.primaryQueue = QueueSong(
             self.b, self.b.getPrimaryQueue(), self.b.getSecondaryQueue())
         self.secondaryQueue = QueueSong(
@@ -29,6 +33,7 @@ class BoardGUI(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         queueSongs = QHBoxLayout()
+        queueSongs.addWidget(self.searchSong)
         queueSongs.addWidget(self.primaryQueue)
         queueSongs.addWidget(self.secondaryQueue)
         layout.addLayout(queueSongs)
@@ -48,4 +53,4 @@ class BoardGUI(QWidget):
     def moveToPrimary(self):
         indexSelected = self.secondaryQueue.getIndexSelected()
         if indexSelected >= 0:
-            self.b.moveSongToPrimary(indexSelected)
+            self.b.moveSongOfIndexToPrimary(indexSelected)

@@ -35,5 +35,8 @@ class Song():
     def __eq__(self, other):
         return self.filename == other.getFilename()
 
+    def __lt__(self, other):
+        return self.name < other.getName()
+
     def __repr__(self):
         return "<_" + self.filename + "_>"

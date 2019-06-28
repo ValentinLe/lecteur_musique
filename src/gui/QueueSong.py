@@ -1,6 +1,6 @@
 
-from PyQt5.QtWidgets import QWidget, QListWidget, QGridLayout
-from PyQt5.Qt import Qt, QEvent
+from PyQt5.QtWidgets import QListWidget
+from PyQt5.Qt import Qt
 from util.StringDuration import getStrDuration
 
 

@@ -16,6 +16,9 @@ class Queue():
             return self.queue[index]
         return None
 
+    def getListElements(self):
+        return self.queue
+
     def isEmpty(self):
         return self.length == 0
 
@@ -29,6 +32,14 @@ class Queue():
             del self.queue[index]
             self.length -= 1
         return elt
+
+    def removeElement(self, element):
+        if element in self.queue:
+            self.queue.remove(element)
+            self.length -= 1
+            return True
+        else:
+            return False
 
     def setElementAt(self, element, index):
         if self.isInIndex(index):
@@ -48,6 +59,12 @@ class Queue():
         secondElement = self.getElementAt(secondIndex)
         self.setElementAt(secondElement, firstIndex)
         self.setElementAt(firstElement, secondIndex)
+
+    def __contains__(self, element):
+        for elt in self.queue:
+            if element == elt:
+                return True
+        return False
 
     def __repr__(self):
         return "Queue, size = " + str(self.length) + "\n" + str(self.queue)
