@@ -21,15 +21,15 @@ class QueueSong(QListWidget):
         index = self.getIndexSelected()
         self.board.moveSongOfQueue(self.queue, self.otherQueue, index)
 
-    def keyPressEvent(self, e):
+    def keyPressEvent(self, event):
         indexSelected = self.getIndexSelected()
-        if e.key() == Qt.Key_Return:
+        if event.key() == Qt.Key_Return:
             self.moveSong()
-        if e.modifiers() & Qt.ControlModifier:
+        if event.modifiers() & Qt.ControlModifier:
             indexTarget = indexSelected
-            if e.key() == Qt.Key_Up:
+            if event.key() == Qt.Key_Up:
                 indexTarget -= 1
-            elif e.key() == Qt.Key_Down:
+            elif event.key() == Qt.Key_Down:
                 indexTarget += 1
             if indexTarget != indexSelected:
                 self.board.switchSong(self.queue, indexSelected, indexTarget)
@@ -37,16 +37,18 @@ class QueueSong(QListWidget):
                 keyMove = Qt.Key_Right
             else:
                 keyMove = Qt.Key_Left
-            if e.key() == keyMove:
+            if event.key() == keyMove:
                 self.moveSong()
                 if indexSelected + 1 > self.count():
                     indexSelected -= 1
         self.setCurrentRow(indexSelected)
-        QListWidget.keyPressEvent(self, e)
+        QListWidget.keyPressEvent(self, event)
 
     def update(self):
+        index = self.currentIndex()
         self.clear()
         for k in range(self.queue.size()):
             song = self.queue.getElementAt(k)
             self.addItem(
                 song.getName() + " - " + song.getAuthor() + " - " + getStrDuration(song.getDuration()))
+        self.setCurrentIndex(index)

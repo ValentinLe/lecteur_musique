@@ -1,5 +1,6 @@
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
+from PyQt5.Qt import Qt
 from model.Board import Board
 from .QueueSong import QueueSong
 from .PlayerSound import PlayerSound
@@ -32,6 +33,17 @@ class BoardGUI(QWidget):
         queueSongs.addWidget(self.secondaryQueue)
         layout.addLayout(queueSongs)
         layout.addWidget(self.player)
+
+    def keyPressEvent(self, event):
+        if not event.modifiers() & Qt.ControlModifier:
+            if event.key() == Qt.Key_Left:
+                self.primaryQueue.setFocus(True)
+                if self.primaryQueue.currentRow() == -1:
+                    self.primaryQueue.setCurrentRow(0)
+            elif event.key() == Qt.Key_Right:
+                self.secondaryQueue.setFocus(False)
+                if self.secondaryQueue.currentRow() == -1:
+                    self.secondaryQueue.setCurrentRow(0)
 
     def moveToPrimary(self):
         indexSelected = self.secondaryQueue.getIndexSelected()
