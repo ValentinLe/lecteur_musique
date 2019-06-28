@@ -19,11 +19,21 @@ class Queue():
     def getListElements(self):
         return self.queue
 
+    def addHead(self, element):
+        self.queue.insert(0, element)
+        self.length += 1
+
     def isEmpty(self):
         return self.length == 0
 
     def isInIndex(self, index):
         return index >= 0 and index < self.length
+
+    def getLast(self):
+        if not self.isEmpty():
+            return self.queue[-1]
+        else:
+            return None
 
     def remove(self, index=0):
         elt = None

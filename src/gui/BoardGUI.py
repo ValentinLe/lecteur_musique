@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt5.Qt import Qt
 from model.Board import Board
 from .QueueSong import QueueSong
@@ -18,8 +18,12 @@ class BoardGUI(QWidget):
 
         self.searchSong = SearchSong(self.b)
 
+        labPrimary = QLabel("Liste d'attente principale")
+        labPrimary.setAlignment(Qt.AlignCenter)
         self.primaryQueue = QueueSong(
             self.b, self.b.getPrimaryQueue(), self.b.getSecondaryQueue())
+        labSecondary = QLabel("Liste d'attente secondaire")
+        labSecondary.setAlignment(Qt.AlignCenter)
         self.secondaryQueue = QueueSong(
             self.b, self.b.getSecondaryQueue(), self.b.getPrimaryQueue())
 
@@ -32,10 +36,21 @@ class BoardGUI(QWidget):
 
         layout = QVBoxLayout()
         self.setLayout(layout)
+
         queueSongs = QHBoxLayout()
         queueSongs.addWidget(self.searchSong)
-        queueSongs.addWidget(self.primaryQueue)
-        queueSongs.addWidget(self.secondaryQueue)
+
+        primaryQueueLayout = QVBoxLayout()
+        primaryQueueLayout.addWidget(labPrimary)
+        primaryQueueLayout.addWidget(self.primaryQueue)
+
+        secondaryQueueLayout = QVBoxLayout()
+        secondaryQueueLayout.addWidget(labSecondary)
+        secondaryQueueLayout.addWidget(self.secondaryQueue)
+
+        queueSongs.addLayout(primaryQueueLayout)
+        queueSongs.addLayout(secondaryQueueLayout)
+
         layout.addLayout(queueSongs)
         layout.addWidget(self.player)
 

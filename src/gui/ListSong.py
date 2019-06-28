@@ -21,6 +21,9 @@ class ListSong(QListWidget):
         for song in self.board.getSecondaryQueue().getListElements():
             if self.filterName in song.getName().lower():
                 listSong.append(song)
+        currentSong = self.board.getCurrentSong()
+        if self.filterName in currentSong.getName().lower():
+            listSong.append(currentSong)
         listSong.sort()
         return listSong
 

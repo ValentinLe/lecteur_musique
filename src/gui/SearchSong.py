@@ -1,12 +1,12 @@
 
 from PyQt5.QtWidgets import QWidget, QLineEdit, QVBoxLayout
+from PyQt5.Qt import QMargins
 from .ListSong import ListSong
 
 
 class SearchSong(QWidget):
     def __init__(self, board):
         QWidget.__init__(self)
-
         self.board = board
 
         self.searchBar = QLineEdit()
@@ -16,6 +16,7 @@ class SearchSong(QWidget):
         self.listSong = ListSong(self.board)
 
         layout = QVBoxLayout()
+        layout.setContentsMargins(QMargins(0, 0, 0, 0))
         self.setLayout(layout)
         layout.addWidget(self.searchBar)
         layout.addWidget(self.listSong)

@@ -51,6 +51,17 @@ class Board(ListenableModel):
         self.firechange()
         return self.currentSong
 
+    def precedentSong(self):
+        song = self.secondaryQueue.getLast()
+        if song:
+            if not self.primaryQueue.isEmpty():
+                self.primaryQueue.addHead(self.currentSong)
+            else:
+                self.secondaryQueue.addHead(self.currentSong)
+            self.secondaryQueue.removeElement(song)
+            self.currentSong = song
+            self.firechange()
+
     def moveSongOfQueue(self, startQueue, destQueue, indexStart):
         song = startQueue.remove(indexStart)
         if song:
