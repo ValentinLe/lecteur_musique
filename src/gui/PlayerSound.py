@@ -11,6 +11,7 @@ class PlayerSound(QWidget):
 
         self.board = board
         self.isPlaying = False
+        self.isChangingPosition = None
 
         currentSong = self.board.getCurrentSong()
         self.player = QMediaPlayer()
@@ -30,7 +31,6 @@ class PlayerSound(QWidget):
 
         self.sliderSong = QSlider(Qt.Horizontal)
         self.sliderSong.sliderPressed.connect(self._sliderPauseSong)
-        self.sliderSong.sliderMoved.connect(self.changePosition)
         self.sliderSong.sliderReleased.connect(self._sliderPlaySong)
         self.labCurrentDuration = QLabel("0:00")
         self.volumeSlider = QSlider(Qt.Horizontal)
@@ -83,13 +83,15 @@ class PlayerSound(QWidget):
         layout.addStretch()
         layout.addLayout(rightVolume)
 
-    def _sliderPlaySong(self, event):
-        if self.isPlaying:
-            self.player.play()
-
-    def _sliderPauseSong(self, event):
+    def _sliderPauseSong(self):
         if self.isPlaying:
             self.player.pause()
+
+    def _sliderPlaySong(self):
+        if self.isPlaying:
+            self.player.play()
+        positionSlider = self.sliderSong.value()
+        self.player.setPosition(positionSlider)
 
     def mediaFinished(self, status):
         if status == QMediaPlayer.EndOfMedia:
@@ -140,12 +142,25 @@ class PlayerSound(QWidget):
         self.sliderSong.setMaximum(song.getDuration())
         self.labMaxDuration.setText(getStrDuration(song.getDuration()))
 
-    def changePosition(self, position):
-        self.player.setPosition(position)
-
     def changeSliderPosition(self, position):
         self.sliderSong.setValue(position)
         self.update()
+
+    def getPositionPlayer(self, positionSlider):
+        maxDuration = self.player.duration()
+        durationSong = self.board.getCurrentSong().getDuration()
+        if durationSong != 0:
+            return positionSlider * maxDuration // durationSong
+        else:
+            return 0
+
+    def getPositionSlider(self, positionPlayer):
+        maxDuration = self.player.duration()
+        durationSong = self.board.getCurrentSong().getDuration()
+        if maxDuration != 0:
+            return positionPlayer * durationSong // maxDuration
+        else:
+            return 0
 
     def changeVolume(self):
         valueVolume = self.volumeSlider.value()
