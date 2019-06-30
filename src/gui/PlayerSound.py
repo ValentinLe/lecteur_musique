@@ -36,7 +36,7 @@ class PlayerSound(QWidget):
         self.volumeSlider = QSlider(Qt.Horizontal)
         self.labMaxDuration = QLabel("0:00")
 
-        self.bMute = QPushButton("No muted")
+        self.bMute = QPushButton("o")
         self.bMute.setMaximumWidth(80)
         self.bMute.clicked.connect(self.mute)
         self.labelVolume = QLabel("100")
@@ -88,10 +88,10 @@ class PlayerSound(QWidget):
             self.player.pause()
 
     def _sliderPlaySong(self):
-        if self.isPlaying:
-            self.player.play()
         positionSlider = self.sliderSong.value()
         self.player.setPosition(positionSlider)
+        if self.isPlaying:
+            self.player.play()
 
     def mediaFinished(self, status):
         if status == QMediaPlayer.EndOfMedia:
@@ -112,9 +112,9 @@ class PlayerSound(QWidget):
         isMuted = self.player.isMuted()
         self.player.setMuted(not isMuted)
         if isMuted:
-            self.bMute.setText("No muted")
+            self.bMute.setText("o")
         else:
-            self.bMute.setText("Muted")
+            self.bMute.setText("x")
 
     def nextSong(self):
         self.board.nextSong()
