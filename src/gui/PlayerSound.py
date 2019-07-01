@@ -1,6 +1,7 @@
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSlider
-from PyQt5.QtCore import QUrl, Qt
+from PyQt5.QtCore import QUrl, Qt, QSize
+from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from util.StringDuration import getStrDuration
 
@@ -8,6 +9,12 @@ from util.StringDuration import getStrDuration
 class PlayerSound(QWidget):
     def __init__(self, board):
         QWidget.__init__(self)
+
+        self.iconPlay = QIcon(QPixmap("assets/play.png"))
+        self.iconPause = QIcon(QPixmap("assets/pause.png"))
+        iconNext = QIcon(QPixmap("assets/next.png"))
+        iconPrecedent = QIcon(QPixmap("assets/precedent.png"))
+        iconSize = QSize(50, 50)
 
         self.board = board
         self.isPlaying = False
@@ -22,11 +29,20 @@ class PlayerSound(QWidget):
         self.player.mediaStatusChanged.connect(self.mediaFinished)
         self.player.positionChanged.connect(self.changeSliderPosition)
 
-        bPrecedent = QPushButton("Precedent")
+        bPrecedent = QPushButton()
+        bPrecedent.setMaximumSize(iconSize)
+        bPrecedent.setIcon(iconPrecedent)
+        bPrecedent.setIconSize(iconSize)
         bPrecedent.clicked.connect(self.precedentSong)
-        self.bPlay = QPushButton("Play")
+        self.bPlay = QPushButton()
+        self.bPlay.setMaximumSize(iconSize)
+        self.bPlay.setIcon(self.iconPlay)
+        self.bPlay.setIconSize(iconSize)
         self.bPlay.clicked.connect(self.play)
-        bNext = QPushButton("Next")
+        bNext = QPushButton()
+        bNext.setMaximumSize(iconSize)
+        bNext.setIcon(iconNext)
+        bNext.setIconSize(iconSize)
         bNext.clicked.connect(self.nextSong)
 
         self.sliderSong = QSlider(Qt.Horizontal)
@@ -57,9 +73,11 @@ class PlayerSound(QWidget):
 
         centerPlayer = QVBoxLayout()
         buttonsPlayer = QHBoxLayout()
+        buttonsPlayer.addStretch()
         buttonsPlayer.addWidget(bPrecedent)
         buttonsPlayer.addWidget(self.bPlay)
         buttonsPlayer.addWidget(bNext)
+        buttonsPlayer.addStretch()
         centerPlayer.addLayout(buttonsPlayer)
         sliderWithTime = QHBoxLayout()
         sliderWithTime.addWidget(self.labCurrentDuration)
@@ -101,11 +119,11 @@ class PlayerSound(QWidget):
         state = self.player.state()
         if state == QMediaPlayer.StoppedState or state == QMediaPlayer.PausedState:
             self.player.play()
-            self.bPlay.setText("Pause")
+            self.bPlay.setIcon(self.iconPause)
             self.isPlaying = True
         else:
             self.player.pause()
-            self.bPlay.setText("Play")
+            self.bPlay.setIcon(self.iconPlay)
             self.isPlaying = False
 
     def mute(self):
