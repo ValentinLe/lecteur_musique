@@ -14,6 +14,8 @@ class PlayerSound(QWidget):
         self.iconPause = QIcon(QPixmap("assets/pause.png"))
         iconNext = QIcon(QPixmap("assets/next.png"))
         iconPrecedent = QIcon(QPixmap("assets/precedent.png"))
+        self.iconSoundOn = QIcon(QPixmap("assets/soundOn.png"))
+        self.iconSoundOff = QIcon(QPixmap("assets/soundOff.png"))
         iconSize = QSize(50, 50)
 
         self.board = board
@@ -52,7 +54,10 @@ class PlayerSound(QWidget):
         self.volumeSlider = QSlider(Qt.Horizontal)
         self.labMaxDuration = QLabel("0:00")
 
-        self.bMute = QPushButton("o")
+        self.bMute = QPushButton()
+        self.bMute.setIcon(self.iconSoundOn)
+        self.bMute.setMaximumSize(iconSize)
+        self.bMute.setIconSize(iconSize)
         self.bMute.setMaximumWidth(80)
         self.bMute.clicked.connect(self.mute)
         self.labelVolume = QLabel("100")
@@ -130,9 +135,9 @@ class PlayerSound(QWidget):
         isMuted = self.player.isMuted()
         self.player.setMuted(not isMuted)
         if isMuted:
-            self.bMute.setText("o")
+            self.bMute.setIcon(self.iconSoundOn)
         else:
-            self.bMute.setText("x")
+            self.bMute.setIcon(self.iconSoundOff)
 
     def nextSong(self):
         self.board.nextSong()
