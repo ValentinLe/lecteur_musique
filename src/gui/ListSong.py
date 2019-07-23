@@ -6,6 +6,9 @@ from .CustomListItem import CustomListItem
 class ListSong(QListWidget):
     def __init__(self, board):
         QListWidget.__init__(self)
+
+        self.setProperty("class", "queue")
+
         self.board = board
         self.board.addListener(self)
         self.filterName = ""

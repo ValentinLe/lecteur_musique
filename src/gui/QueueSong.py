@@ -8,6 +8,8 @@ class QueueSong(QListWidget):
     def __init__(self, board, queue, otherQueue):
         QListWidget.__init__(self)
 
+        self.setProperty("class", "queue")
+
         self.board = board
         self.queue = queue
         self.otherQueue = otherQueue

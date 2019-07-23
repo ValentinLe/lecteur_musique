@@ -1,0 +1,17 @@
+
+ QMainWindow {
+    background-color: #353535;
+}
+
+QWidget {
+    color: white;
+}
+
+QWidget[class="queue"] {
+    background-color: #535353;
+}
+
+QPushButton {
+    background-color: red; 
+    border-radius: 25px;
+}
