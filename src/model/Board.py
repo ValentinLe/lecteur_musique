@@ -84,5 +84,9 @@ class Board(ListenableModel):
         queue.switchElements(firstIndex, secondIndex)
         self.firechange()
 
+    def shuffle(self, nb=1):
+        self.secondaryQueue.shuffle(nb)
+        self.firechange()
+
     def __repr__(self):
         return "Board :\ncurrent=" + str(self.currentSong) + "\nprimary : \n" + str(self.primaryQueue) + "\n\nsecondary : \n" + str(self.secondaryQueue)

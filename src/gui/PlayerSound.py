@@ -14,6 +14,8 @@ class PlayerSound(QWidget):
         self.iconPause = QIcon(QPixmap("assets/pause.png"))
         iconNext = QIcon(QPixmap("assets/next.png"))
         iconPrecedent = QIcon(QPixmap("assets/precedent.png"))
+        iconShuffle = QIcon(QPixmap("assets/shuffle.png"))
+        iconReplay = QIcon(QPixmap("assets/replay.png"))
         self.iconSoundOn = QIcon(QPixmap("assets/soundOn.png"))
         self.iconSoundOff = QIcon(QPixmap("assets/soundOff.png"))
         iconSize = QSize(50, 50)
@@ -31,6 +33,11 @@ class PlayerSound(QWidget):
         self.player.mediaStatusChanged.connect(self.mediaFinished)
         self.player.positionChanged.connect(self.changeSliderPosition)
 
+        bShuffle = QPushButton()
+        bShuffle.setMaximumSize(iconSize)
+        bShuffle.setIcon(iconShuffle)
+        bShuffle.setIconSize(iconSize)
+        bShuffle.clicked.connect(self.shuffle)
         bPrecedent = QPushButton()
         bPrecedent.setMaximumSize(iconSize)
         bPrecedent.setIcon(iconPrecedent)
@@ -46,6 +53,11 @@ class PlayerSound(QWidget):
         bNext.setIcon(iconNext)
         bNext.setIconSize(iconSize)
         bNext.clicked.connect(self.nextSong)
+        bReplay = QPushButton()
+        bReplay.setMaximumSize(iconSize)
+        bReplay.setIcon(iconReplay)
+        bReplay.setIconSize(iconSize)
+        bReplay.clicked.connect(self.replay)
 
         self.sliderSong = QSlider(Qt.Horizontal)
         self.sliderSong.sliderPressed.connect(self._sliderPauseSong)
@@ -79,9 +91,11 @@ class PlayerSound(QWidget):
         centerPlayer = QVBoxLayout()
         buttonsPlayer = QHBoxLayout()
         buttonsPlayer.addStretch()
+        buttonsPlayer.addWidget(bShuffle)
         buttonsPlayer.addWidget(bPrecedent)
         buttonsPlayer.addWidget(self.bPlay)
         buttonsPlayer.addWidget(bNext)
+        buttonsPlayer.addWidget(bReplay)
         buttonsPlayer.addStretch()
         centerPlayer.addLayout(buttonsPlayer)
         sliderWithTime = QHBoxLayout()
@@ -119,6 +133,13 @@ class PlayerSound(QWidget):
     def mediaFinished(self, status):
         if status == QMediaPlayer.EndOfMedia:
             self.nextSong()
+
+    def shuffle(self):
+        self.board.shuffle(5)
+
+    def replay(self):
+        self.player.setPosition(0)
+        self.update()
 
     def play(self):
         state = self.player.state()

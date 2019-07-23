@@ -1,7 +1,6 @@
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt5.Qt import Qt
-from PyQt5.QtCore import QEvent
 from model.Board import Board
 from .QueueSong import QueueSong
 from .PlayerSound import PlayerSound
@@ -13,6 +12,7 @@ class BoardGUI(QWidget):
         QWidget.__init__(self)
 
         path = "C:/Users/Val/Desktop/Dossier/musiques"
+        self.changeSong = True
         self.b = Board()
         self.b.addSongOfDirectory(path)
         self.b.secondaryQueue.shuffle(10)
@@ -55,13 +55,20 @@ class BoardGUI(QWidget):
         layout.addLayout(queueSongs)
         layout.addWidget(self.player)
 
-    def keyReleaseEvent(self, event):
-        if event.key() == 16777344:
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_MediaPlay or event.key() == Qt.Key_MediaPause:
             self.player.play()
-        elif event.key() == 16777346:
-            self.player.precedentSong()
-        elif event.key() == 16777347:
-            self.player.nextSong()
+        else:
+            if self.changeSong:
+                self.changeSong = False
+                if event.key() == Qt.Key_MediaPrevious:
+                    self.player.precedentSong()
+                elif event.key() == Qt.Key_MediaNext:
+                    self.player.nextSong()
+                else:
+                    self.changeSong = True
+            else:
+                self.changeSong = True
 
     def moveToPrimary(self):
         indexSelected = self.secondaryQueue.getIndexSelected()

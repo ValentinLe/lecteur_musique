@@ -1,6 +1,6 @@
 
-from PyQt5.QtWidgets import QListWidget
-from util.StringDuration import getStrDuration
+from PyQt5.QtWidgets import QListWidget, QListWidgetItem
+from .CustomListItem import CustomListItem
 
 
 class ListSong(QListWidget):
@@ -40,5 +40,8 @@ class ListSong(QListWidget):
         self.listFilteredSong = self.getOrderListFilterSong()
         self.clear()
         for song in self.listFilteredSong:
-            self.addItem(
-                song.getName() + " - " + song.getAuthor() + " - " + getStrDuration(song.getDuration()))
+            item = CustomListItem(song=song)
+            listItem = QListWidgetItem(self)
+            listItem.setSizeHint(item.sizeHint())
+            self.addItem(listItem)
+            self.setItemWidget(listItem, item)
