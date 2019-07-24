@@ -10,6 +10,10 @@ class PlayerSound(QWidget):
     def __init__(self, board):
         QWidget.__init__(self)
 
+        heightWindow = 125
+        self.setMinimumHeight(heightWindow)
+        self.setMaximumHeight(heightWindow)
+
         self.iconPlay = QIcon(QPixmap("assets/play.png"))
         self.iconPause = QIcon(QPixmap("assets/pause.png"))
         iconNext = QIcon(QPixmap("assets/next.png"))
@@ -27,9 +31,12 @@ class PlayerSound(QWidget):
         currentSong = self.board.getCurrentSong()
         self.player = QMediaPlayer()
         self.songName = QLabel(currentSong.getName())
-        self.songName.setMinimumWidth(200)
-        self.songName.setMaximumWidth(200)
+        self.songName.setProperty("class", "songName")
+        self.songName.setWordWrap(True)
+        self.songName.setMinimumWidth(250)
+        self.songName.setMaximumWidth(250)
         self.songAuthor = QLabel(currentSong.getAuthor())
+        self.songAuthor.setProperty("class", "author")
         self.player.mediaStatusChanged.connect(self.mediaFinished)
         self.player.positionChanged.connect(self.changeSliderPosition)
 
@@ -74,8 +81,8 @@ class PlayerSound(QWidget):
         self.bMute.clicked.connect(self.mute)
         self.labelVolume = QLabel("100")
         self.labelVolume.setAlignment(Qt.AlignCenter)
-        self.volumeSlider.setMinimumWidth(200)
-        self.volumeSlider.setMaximumWidth(200)
+        self.volumeSlider.setMinimumWidth(250)
+        self.volumeSlider.setMaximumWidth(250)
         self.volumeSlider.setMaximum(100)
         self.volumeSlider.setValue(100)
         self.volumeSlider.valueChanged.connect(self.changeVolume)
@@ -92,9 +99,13 @@ class PlayerSound(QWidget):
         buttonsPlayer = QHBoxLayout()
         buttonsPlayer.addStretch()
         buttonsPlayer.addWidget(bShuffle)
+        buttonsPlayer.addSpacing(8)
         buttonsPlayer.addWidget(bPrecedent)
+        buttonsPlayer.addSpacing(8)
         buttonsPlayer.addWidget(self.bPlay)
+        buttonsPlayer.addSpacing(8)
         buttonsPlayer.addWidget(bNext)
+        buttonsPlayer.addSpacing(8)
         buttonsPlayer.addWidget(bReplay)
         buttonsPlayer.addStretch()
         centerPlayer.addLayout(buttonsPlayer)
@@ -104,12 +115,9 @@ class PlayerSound(QWidget):
         sliderWithTime.addWidget(self.labMaxDuration)
         centerPlayer.addLayout(sliderWithTime)
 
-        rightVolume = QVBoxLayout()
-        rightVolume.addWidget(self.labelVolume)
         sliderAndMuteLayout = QHBoxLayout()
         sliderAndMuteLayout.addWidget(self.bMute)
         sliderAndMuteLayout.addWidget(self.volumeSlider)
-        rightVolume.addLayout(sliderAndMuteLayout)
 
         # positionnement global
         layout = QHBoxLayout()
@@ -118,7 +126,7 @@ class PlayerSound(QWidget):
         layout.addStretch()
         layout.addLayout(centerPlayer)
         layout.addStretch()
-        layout.addLayout(rightVolume)
+        layout.addLayout(sliderAndMuteLayout)
 
     def _sliderPauseSong(self):
         if self.isPlaying:
@@ -209,7 +217,6 @@ class PlayerSound(QWidget):
     def changeVolume(self):
         valueVolume = self.volumeSlider.value()
         self.player.setVolume(valueVolume)
-        self.labelVolume.setText(str(valueVolume))
 
     def update(self):
         song = self.board.getCurrentSong()

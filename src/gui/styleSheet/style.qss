@@ -12,6 +12,53 @@ QWidget[class="queue"] {
 }
 
 QPushButton {
-    background-color: red; 
     border-radius: 25px;
+}
+
+QPushButton:hover {
+    background-color: rgba(20, 172, 255, 0.4);
+}
+
+QPushButton:pressed {
+    background-color: rgba(20, 172, 255, 0.6);
+}
+
+QWidget[class="searchBar"] {
+    background-color: #535353;
+    selection-background-color: rgb(9, 144, 255);
+}
+
+QWidget[class="title"], QWidget[class="searchBar"] {
+    border: none;
+    padding: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+QWidget[class="searchBar"] {
+    padding: 7px 8px;
+}
+
+QWidget[class="songName"] {
+    font-size: 18px;
+    padding: 8px 0;
+    font-weight: bold;
+}
+
+QWidget[class="author"] {
+    font-size: 16px;
+    padding: 8px 0;
+}
+
+QSlider::groove {
+    height: 5px;
+    background: white;
+}
+
+QSlider::handle {
+    background: #14acff;
+}
+
+QSlider::sub-page {
+    background: #14acff;
 }

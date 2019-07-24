@@ -10,6 +10,7 @@ class SearchSong(QWidget):
         self.board = board
 
         self.searchBar = QLineEdit()
+        self.searchBar.setProperty("class", "searchBar")
         self.searchBar.setPlaceholderText("Rechercher...")
         self.searchBar.textChanged.connect(self.textChanged)
 
