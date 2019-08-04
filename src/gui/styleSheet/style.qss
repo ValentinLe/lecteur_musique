@@ -9,6 +9,8 @@ QWidget {
 
 QWidget[class="queue"] {
     background-color: #535353;
+    border: 1px solid #ababab;
+    border-radius: 4px;
 }
 
 QPushButton {
@@ -37,6 +39,8 @@ QWidget[class="title"], QWidget[class="searchBar"] {
 
 QWidget[class="searchBar"] {
     padding: 7px 8px;
+    border: 1px solid #ababab;
+    border-radius: 4px;
 }
 
 QWidget[class="songName"] {
@@ -56,6 +60,39 @@ QWidget[class="duration"] {
 
 QWidget[class="bold"] {
     font-weight: bold;
+}
+
+QScrollBar:vertical{
+  background: palette(base);
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  width: 16px;
+  margin: 0px;
+}
+
+QScrollBar::handle:vertical{
+  background-color: palette(alternate-base);
+  border-radius: 2px;
+  min-height: 20px;
+  margin: 2px 2px 2px 2px;
+}
+
+QScrollBar::handle:vertical:hover{
+  background-color: #353535;
+}
+
+QScrollBar::add-line:vertical{
+  background: none;
+  height: 0px;
+  subcontrol-position: right;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical{
+  background: none;
+  height: 0px;
+  subcontrol-position: left;
+  subcontrol-origin: margin;
 }
 
 QSlider {
