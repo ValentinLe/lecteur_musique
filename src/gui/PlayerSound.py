@@ -33,8 +33,7 @@ class PlayerSound(QWidget):
         self.songName = QLabel(currentSong.getName())
         self.songName.setProperty("class", "songName")
         self.songName.setWordWrap(True)
-        self.songName.setMinimumWidth(310)
-        self.songName.setMaximumWidth(310)
+        self.songName.setFixedWidth(310)
         self.songAuthor = QLabel(currentSong.getAuthor())
         self.songAuthor.setProperty("class", "author")
         self.player.mediaStatusChanged.connect(self.mediaFinished)
@@ -69,8 +68,6 @@ class PlayerSound(QWidget):
         self.sliderSong = QSlider(Qt.Horizontal)
         self.sliderSong.setMinimumWidth(600)
         self.sliderSong.setMaximumWidth(600)
-        self.sliderSong.sliderPressed.connect(self._sliderPauseSong)
-        self.sliderSong.sliderReleased.connect(self._sliderPlaySong)
         self.labCurrentDuration = QLabel("0:00")
         self.labCurrentDuration.setProperty("class", "duration")
         self.volumeSlider = QSlider(Qt.Horizontal)
@@ -85,8 +82,7 @@ class PlayerSound(QWidget):
         self.bMute.clicked.connect(self.mute)
         self.labelVolume = QLabel("100")
         self.labelVolume.setAlignment(Qt.AlignCenter)
-        self.volumeSlider.setMinimumWidth(250)
-        self.volumeSlider.setMaximumWidth(250)
+        self.volumeSlider.setFixedWidth(250)
         self.volumeSlider.setMaximum(100)
         self.volumeSlider.setValue(100)
         self.volumeSlider.valueChanged.connect(self.changeVolume)
@@ -131,16 +127,6 @@ class PlayerSound(QWidget):
         layout.addLayout(centerPlayer)
         layout.addStretch()
         layout.addLayout(sliderAndMuteLayout)
-
-    def _sliderPauseSong(self):
-        if self.isPlaying:
-            self.player.pause()
-
-    def _sliderPlaySong(self):
-        positionSlider = self.sliderSong.value()
-        self.player.setPosition(positionSlider)
-        if self.isPlaying:
-            self.player.play()
 
     def mediaFinished(self, status):
         if status == QMediaPlayer.EndOfMedia:

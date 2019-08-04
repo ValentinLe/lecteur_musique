@@ -24,3 +24,6 @@ class SearchSong(QWidget):
 
     def textChanged(self, event):
         self.listSong.setFilterName(self.searchBar.text().lower())
+
+    def clearSearch(self):
+        self.searchBar.setText("")

@@ -33,7 +33,7 @@ class QueueSong(QListWidget):
                 indexTarget -= 1
             elif event.key() == Qt.Key_Down:
                 indexTarget += 1
-            if indexTarget != indexSelected:
+            if indexTarget != indexSelected and self.queue.isInIndex(indexTarget):
                 self.board.switchSong(self.queue, indexSelected, indexTarget)
             if self.queue == self.board.getPrimaryQueue():
                 keyMove = Qt.Key_Right

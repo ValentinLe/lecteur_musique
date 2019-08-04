@@ -10,6 +10,7 @@ class CustomListItem(QWidget):
         layout = QHBoxLayout()
         if song:
             self.songName = QLabel(song.getName())
+            self.setFixedWidth(650)
             self.songName.setProperty("class", "bold")
             self.songAuthor = QLabel(song.getAuthor())
             self.songAuthor.setAlignment(Qt.AlignCenter)

@@ -58,6 +58,8 @@ class BoardGUI(QWidget):
         layout.addWidget(self.player)
 
     def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Delete:
+            self.searchSong.clearSearch()
         if event.key() == Qt.Key_MediaPlay or event.key() == Qt.Key_MediaPause:
             self.player.play()
         else:

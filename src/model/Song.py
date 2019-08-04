@@ -3,8 +3,8 @@ class Song():
     def __init__(self, path, filename, author="Unknown", duration=0):
         self.path = path
         self.filename = filename
-        self.name = filename.split(".")[0]
-        self.format = filename.split(".")[1]
+        self.format = filename.split(".")[-1]
+        self.name = filename.split("." + str(self.format))[0]
         self.author = author
         self.duration = duration
 
