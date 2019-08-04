@@ -19,13 +19,13 @@ class ListSong(QListWidget):
     def getOrderListFilterSong(self):
         listSong = []
         for song in self.board.getPrimaryQueue().getListElements():
-            if self.filterName in song.getName().lower():
+            if self.filterName in song.getName().lower() or self.filterName in song.getAuthor().lower():
                 listSong.append(song)
         for song in self.board.getSecondaryQueue().getListElements():
-            if self.filterName in song.getName().lower():
+            if self.filterName in song.getName().lower() or self.filterName in song.getAuthor().lower():
                 listSong.append(song)
         currentSong = self.board.getCurrentSong()
-        if self.filterName in currentSong.getName().lower():
+        if self.filterName in currentSong.getName().lower() or self.filterName in currentSong.getAuthor().lower():
             listSong.append(currentSong)
         listSong.sort()
         return listSong

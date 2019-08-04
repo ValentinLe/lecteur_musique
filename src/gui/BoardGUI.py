@@ -19,12 +19,12 @@ class BoardGUI(QWidget):
 
         self.searchSong = SearchSong(self.b)
 
-        labPrimary = QLabel("Liste d'attente principale")
+        labPrimary = QLabel("Liste d'attente prioritaire")
         labPrimary.setProperty("class", "title")
         labPrimary.setAlignment(Qt.AlignCenter)
         self.primaryQueue = QueueSong(
             self.b, self.b.getPrimaryQueue(), self.b.getSecondaryQueue())
-        labSecondary = QLabel("Liste d'attente secondaire")
+        labSecondary = QLabel("Liste d'attente")
         labSecondary.setProperty("class", "title")
         labSecondary.setAlignment(Qt.AlignCenter)
         self.secondaryQueue = QueueSong(

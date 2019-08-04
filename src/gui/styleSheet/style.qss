@@ -50,8 +50,20 @@ QWidget[class="author"] {
     padding: 8px 0;
 }
 
+QWidget[class="duration"] {
+    font-size: 16px;
+}
+
+QWidget[class="bold"] {
+    font-weight: bold;
+}
+
+QSlider {
+    padding-top: 2px;
+}
+
 QSlider::groove {
-    height: 5px;
+    height: 6px;
     background: white;
 }
 
