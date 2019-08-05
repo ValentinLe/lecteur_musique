@@ -65,21 +65,18 @@ QWidget[class="bold"] {
 QScrollBar:vertical {
     background: palette(base);
     width: 16px;
-    margin: 2px 2px 2px 2px;
+    margin: 0px 2px 2px 0px;
 }
 
 QScrollBar::handle:vertical{
     background: #353535;
-    border-radius: 2px;
+    border-radius: 4px;
     min-height: 20px;
-    margin: 2px 2px 2px 2px;
+    margin: 2px 4px 4px 2px;
 }
 
 QScrollBar::handle:hover:vertical{
     background: #3f3f3f;
-    border-radius: 2px;
-    min-height: 20px;
-    margin: 2px 4px 2px 4px;
 }
 
 QScrollBar::add-line:vertical {
