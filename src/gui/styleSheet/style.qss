@@ -62,37 +62,38 @@ QWidget[class="bold"] {
     font-weight: bold;
 }
 
-QScrollBar:vertical{
-  background: palette(base);
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  width: 16px;
-  margin: 0px;
+QScrollBar:vertical {
+    background: palette(base);
+    width: 16px;
+    margin: 2px 2px 2px 2px;
 }
 
 QScrollBar::handle:vertical{
-  background-color: palette(alternate-base);
-  border-radius: 2px;
-  min-height: 20px;
-  margin: 2px 2px 2px 2px;
+    background: #353535;
+    border-radius: 2px;
+    min-height: 20px;
+    margin: 2px 2px 2px 2px;
 }
 
-QScrollBar::handle:vertical:hover{
-  background-color: #353535;
+QScrollBar::handle:hover:vertical{
+    background: #3f3f3f;
+    border-radius: 2px;
+    min-height: 20px;
+    margin: 2px 4px 2px 4px;
 }
 
-QScrollBar::add-line:vertical{
-  background: none;
-  height: 0px;
-  subcontrol-position: right;
-  subcontrol-origin: margin;
+QScrollBar::add-line:vertical {
+    background: none;
+    height: 0px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
 }
 
-QScrollBar::sub-line:vertical{
-  background: none;
-  height: 0px;
-  subcontrol-position: left;
-  subcontrol-origin: margin;
+QScrollBar::sub-line:vertical {
+    background: none;
+    height: 0px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
 }
 
 QSlider {
