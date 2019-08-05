@@ -1,6 +1,6 @@
 
 from PyQt5.QtWidgets import QWidget, QLineEdit, QVBoxLayout
-from PyQt5.Qt import QMargins
+from PyQt5.Qt import QMargins, Qt
 from .ListSong import ListSong
 
 

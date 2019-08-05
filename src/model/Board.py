@@ -88,5 +88,11 @@ class Board(ListenableModel):
         self.secondaryQueue.shuffle(nb)
         self.firechange()
 
+    def clearSongs(self):
+        self.currentSong = None
+        self.primaryQueue = Queue()
+        self.secondaryQueue = Queue()
+        self.firechange()
+
     def __repr__(self):
         return "Board :\ncurrent=" + str(self.currentSong) + "\nprimary : \n" + str(self.primaryQueue) + "\n\nsecondary : \n" + str(self.secondaryQueue)

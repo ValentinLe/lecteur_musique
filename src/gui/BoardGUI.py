@@ -2,6 +2,7 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt5.Qt import Qt
 from model.Board import Board
+from util.Config import Config
 from .QueueSong import QueueSong
 from .PlayerSound import PlayerSound
 from .SearchSong import SearchSong
@@ -10,11 +11,11 @@ from .SearchSong import SearchSong
 class BoardGUI(QWidget):
     def __init__(self):
         QWidget.__init__(self)
-
-        path = "C:/Users/Val/Desktop/Dossier/musiques"
+        config = Config("config/config.conf")
+        self.changePath(config.getValueOf("path"))
         self.changeSong = True
         self.b = Board()
-        self.b.addSongOfDirectory(path)
+        self.b.addSongOfDirectory(self.path)
         self.b.secondaryQueue.shuffle(10)
 
         self.searchSong = SearchSong(self.b)
@@ -78,3 +79,6 @@ class BoardGUI(QWidget):
         indexSelected = self.secondaryQueue.getIndexSelected()
         if indexSelected >= 0:
             self.b.moveSongOfIndexToPrimary(indexSelected)
+
+    def changePath(self, newPath):
+        self.path = newPath

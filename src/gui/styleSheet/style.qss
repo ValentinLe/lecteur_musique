@@ -38,14 +38,14 @@ QWidget[class="title"], QWidget[class="searchBar"] {
 }
 
 QWidget[class="searchBar"] {
-    padding: 7px 8px;
+    padding: 6px 8px;
     border: 1px solid #ababab;
     border-radius: 4px;
 }
 
 QWidget[class="songName"] {
-    font-size: 18px;
     padding: 8px 0;
+    font-size: 18px;
     font-weight: bold;
 }
 
