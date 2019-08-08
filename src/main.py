@@ -4,6 +4,7 @@ import ctypes
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon, QPixmap, QPalette, QColor
 from gui.MainWindow import MainWindow
+from gui.ConfigWindow import ConfigWindow
 
 
 def mainGUI():
@@ -18,8 +19,8 @@ def mainGUI():
 
     # couleurs pour la scrollBar
     palette = QPalette()
-    palette.setColor(QPalette.Base, QColor("#535353"))
-    palette.setColor(QPalette.Light, QColor("#535353"))
+    palette.setColor(QPalette.Base, QColor("#454545"))
+    palette.setColor(QPalette.Light, QColor("#454545"))
     app.setPalette(palette)
 
     # affichage de la fenetre principale
@@ -27,6 +28,8 @@ def mainGUI():
     window.setWindowTitle("Musique")
     window.showMaximized()
     # window.show()
+    w = ConfigWindow()
+    w.show()
 
     sys.exit(app.exec_())
 
