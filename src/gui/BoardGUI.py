@@ -61,6 +61,17 @@ class BoardGUI(QWidget):
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Delete:
             self.searchSong.clearSearch()
+        if not event.modifiers() & Qt.ControlModifier:
+            if event.key() == Qt.Key_Left:
+                self.primaryQueue.setFocus(True)
+                index = self.primaryQueue.getIndexSelected()
+                if index < 0:
+                    self.primaryQueue.setSelectedIndex(0)
+            elif event.key() == Qt.Key_Right:
+                self.secondaryQueue.setFocus(True)
+                index = self.secondaryQueue.getIndexSelected()
+                if index < 0:
+                    self.secondaryQueue.setSelectedIndex(0)
         if event.key() == Qt.Key_MediaPlay or event.key() == Qt.Key_MediaPause:
             self.player.play()
         else:

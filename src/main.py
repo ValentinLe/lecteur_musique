@@ -24,6 +24,7 @@ def mainGUI():
 
     # affichage de la fenetre principale
     window = MainWindow()
+    window.setWindowTitle("Musique")
     window.showMaximized()
     # window.show()
 

@@ -19,6 +19,9 @@ class QueueSong(QListWidget):
     def getIndexSelected(self):
         return self.currentRow()
 
+    def setSelectedIndex(self, index):
+        self.setCurrentRow(index)
+
     def moveSong(self):
         index = self.getIndexSelected()
         self.board.moveSongOfQueue(self.queue, self.otherQueue, index)

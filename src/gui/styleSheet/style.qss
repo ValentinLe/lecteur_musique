@@ -1,6 +1,24 @@
 
- QMainWindow {
+QMainWindow {
     background-color: #353535;
+}
+
+QListWidget {
+    outline: 0;
+}
+
+QListWidget::item {
+    background: #535353;
+}
+
+QListWidget::item:hover {
+    background: rgba(9, 144, 255, 0.2);
+    border: 1px solid rgba(9, 144, 255, 0.3);
+}
+
+QListWidget::item:focus:selected {
+    background: rgba(9, 144, 255, 0.4);
+    border: 1px solid rgba(9, 144, 255, 0.5);
 }
 
 QWidget {
@@ -65,14 +83,14 @@ QWidget[class="bold"] {
 QScrollBar:vertical {
     background: palette(base);
     width: 16px;
-    margin: 0px 2px 2px 0px;
+    margin: 0px 2px;
 }
 
 QScrollBar::handle:vertical{
     background: #353535;
     border-radius: 4px;
     min-height: 20px;
-    margin: 2px 4px 4px 2px;
+    margin: 2px 2px;
 }
 
 QScrollBar::handle:hover:vertical{
@@ -94,11 +112,11 @@ QScrollBar::sub-line:vertical {
 }
 
 QSlider {
-    padding-top: 2px;
+    height: 6px;
+    margin-top: 2px;
 }
 
 QSlider::groove {
-    height: 6px;
     background: white;
 }
 
