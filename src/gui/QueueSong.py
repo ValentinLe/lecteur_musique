@@ -46,8 +46,8 @@ class QueueSong(QListWidget):
                 self.moveSong()
                 if indexSelected + 1 > self.count():
                     indexSelected -= 1
-        self.setCurrentRow(indexSelected)
-        QListWidget.keyPressEvent(self, event)
+            self.setCurrentRow(indexSelected)
+            QListWidget.keyPressEvent(self, event)
 
     def update(self):
         index = self.currentIndex()

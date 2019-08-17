@@ -29,7 +29,7 @@ def mainGUI():
     window.showMaximized()
     # window.show()
     w = ConfigWindow()
-    w.show()
+    # w.show()
 
     sys.exit(app.exec_())
 
