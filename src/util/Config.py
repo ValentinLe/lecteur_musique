@@ -14,3 +14,15 @@ class Config():
 
     def getValueOf(self, configName):
         return self.configMap[configName]
+
+    def setValueOf(self, configName, value):
+        self.configMap[configName] = value
+
+    def save(self):
+        file = open(self.configFile, "w")
+        res = ""
+        separator = "="
+        for config in self.configMap:
+            res += config + separator + self.getValueOf(config)
+        file.write(res)
+        file.close()

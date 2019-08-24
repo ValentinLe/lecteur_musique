@@ -1,14 +1,15 @@
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSlider
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSlider
 from PyQt5.QtCore import QUrl, Qt, QSize
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from util.StringDuration import getStrDuration
+from gui.ConfigWindow import ConfigWindow
 
 
 class PlayerSound(QWidget):
-    def __init__(self, board):
-        QWidget.__init__(self)
+    def __init__(self, board, parent=None):
+        QWidget.__init__(self, parent)
 
         heightWindow = 125
         self.setMinimumHeight(heightWindow)
@@ -22,6 +23,7 @@ class PlayerSound(QWidget):
         iconReplay = QIcon(QPixmap("assets/replay.png"))
         self.iconSoundOn = QIcon(QPixmap("assets/soundOn.png"))
         self.iconSoundOff = QIcon(QPixmap("assets/soundOff.png"))
+        iconConfig = QIcon(QPixmap("assets/config.png"))
         iconSize = QSize(50, 50)
 
         self.board = board
@@ -85,6 +87,12 @@ class PlayerSound(QWidget):
         self.volumeSlider.setValue(100)
         self.volumeSlider.valueChanged.connect(self.changeVolume)
 
+        bParams = QPushButton()
+        bParams.setFixedSize(iconSize)
+        bParams.setIcon(iconConfig)
+        bParams.setIconSize(iconSize)
+        bParams.clicked.connect(self.openParams)
+
         self.setSongInPlayer()
 
         # position elements
@@ -113,9 +121,16 @@ class PlayerSound(QWidget):
         sliderWithTime.addWidget(self.labMaxDuration)
         centerPlayer.addLayout(sliderWithTime)
 
+        rightVolumeParam = QVBoxLayout()
         sliderAndMuteLayout = QHBoxLayout()
         sliderAndMuteLayout.addWidget(self.bMute)
         sliderAndMuteLayout.addWidget(self.volumeSlider)
+        rightVolumeParam.addLayout(sliderAndMuteLayout)
+        otherButtonsZone = QHBoxLayout()
+        otherButtonsZone.addStretch()
+        otherButtonsZone.addWidget(bParams)
+        otherButtonsZone.addStretch()
+        rightVolumeParam.addLayout(otherButtonsZone)
 
         # positionnement global
         layout = QHBoxLayout()
@@ -124,7 +139,7 @@ class PlayerSound(QWidget):
         layout.addStretch()
         layout.addLayout(centerPlayer)
         layout.addStretch()
-        layout.addLayout(sliderAndMuteLayout)
+        layout.addLayout(rightVolumeParam)
 
     def mediaFinished(self, status):
         if status == QMediaPlayer.EndOfMedia:
@@ -208,6 +223,14 @@ class PlayerSound(QWidget):
     def changeVolume(self):
         valueVolume = self.volumeSlider.value()
         self.player.setVolume(valueVolume)
+
+    def openParams(self):
+        w = QMainWindow(self)
+        w.setCentralWidget(ConfigWindow(self.board, w))
+        w.setGeometry(650, 500, 600, 150)
+        w.setStyleSheet(open("src/gui/styleSheet/styleParam.qss", "r").read())
+        w.setWindowTitle("Paramètres")
+        w.show()
 
     def update(self):
         song = self.board.getCurrentSong()

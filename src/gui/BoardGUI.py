@@ -2,22 +2,18 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt5.Qt import Qt
 from util.Config import Config
-from gui.ConfigWindow import ConfigWindow
 from .QueueSong import QueueSong
 from .PlayerSound import PlayerSound
 from .SearchSong import SearchSong
 
 
 class BoardGUI(QWidget):
-    def __init__(self, board):
-        QWidget.__init__(self)
+    def __init__(self, board, parent=None):
+        QWidget.__init__(self, parent)
         config = Config("config/config.conf")
         self.b = board
         self.changeSong = True
         self.b.setDirectory(config.getValueOf("path"))
-
-        w = ConfigWindow(self.b, self)
-        w.show()
 
         self.searchSong = SearchSong(self.b)
 

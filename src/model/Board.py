@@ -22,6 +22,7 @@ class Board(ListenableModel):
         self.directory = directory
         self.addSongOfDirectory(directory)
         self.shuffle(10)
+        self.nextSong()
 
     def addSongOfDirectory(self, directory):
         listFiles = listFile(directory)
@@ -32,7 +33,6 @@ class Board(ListenableModel):
                 song.setDuration(int(audio.info.length * 1000))
                 song.setAuthor(audio.tags["TPE1"].text[0])
                 self.secondaryQueue.add(song)
-        self.nextSong()
         self.firechange()
 
     def getCurrentSong(self):

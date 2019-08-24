@@ -1,0 +1,33 @@
+
+QMainWindow {
+    background-color: #353535;
+}
+
+QWidget {
+    color: white;
+}
+
+QPushButton {
+    padding: 8px;
+    border-radius: 4px;
+}
+
+QPushButton:hover {
+    background-color: rgba(20, 172, 255, 0.4);
+}
+
+QPushButton:pressed {
+    background-color: rgba(20, 172, 255, 0.6);
+}
+
+QPushButton[class="specialButton"] {
+    font-weight: bold;
+}
+
+QLineEdit {
+    background-color: #454545;
+    selection-background-color: rgb(9, 144, 255);
+    padding: 7px 8px;
+    border: 0;
+    border-radius: 4px;
+}

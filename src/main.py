@@ -5,7 +5,6 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon, QPixmap, QPalette, QColor
 from model.Board import Board
 from gui.MainWindow import MainWindow
-from gui.ConfigWindow import ConfigWindow
 
 
 def mainGUI():
@@ -30,8 +29,6 @@ def mainGUI():
     window.setWindowTitle("Musique")
     window.showMaximized()
     # window.show()
-    w = ConfigWindow(board)
-    w.show()
 
     sys.exit(app.exec_())
 

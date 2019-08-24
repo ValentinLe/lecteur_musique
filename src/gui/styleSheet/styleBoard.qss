@@ -7,6 +7,10 @@ QListWidget {
     outline: 0;
 }
 
+QWidget {
+    color: white;
+}
+
 QListWidget::item:hover {
     background: rgba(9, 144, 255, 0.2);
     border: 1px solid rgba(9, 144, 255, 0.3);
@@ -15,10 +19,6 @@ QListWidget::item:hover {
 QListWidget::item:focus:selected {
     background: rgba(9, 144, 255, 0.4);
     border: 1px solid rgba(9, 144, 255, 0.5);
-}
-
-QWidget {
-    color: white;
 }
 
 QWidget[class="queue"] {
