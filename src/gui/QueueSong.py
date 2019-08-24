@@ -32,12 +32,12 @@ class QueueSong(QListWidget):
         indexSelected = self.getIndexSelected()
         if event.key() == Qt.Key_Return:
             self.moveSong()
+        indexTarget = indexSelected
+        if event.key() == Qt.Key_Up:
+            indexTarget -= 1
+        elif event.key() == Qt.Key_Down:
+            indexTarget += 1
         if event.modifiers() & Qt.ControlModifier:
-            indexTarget = indexSelected
-            if event.key() == Qt.Key_Up:
-                indexTarget -= 1
-            elif event.key() == Qt.Key_Down:
-                indexTarget += 1
             if indexTarget != indexSelected and self.queue.isInIndex(indexTarget):
                 self.board.switchSong(self.queue, indexSelected, indexTarget)
             if self.queue == self.board.getPrimaryQueue():
@@ -48,8 +48,8 @@ class QueueSong(QListWidget):
                 self.moveSong()
                 if indexSelected + 1 > self.count():
                     indexSelected -= 1
-            self.setCurrentRow(indexSelected)
-            QListWidget.keyPressEvent(self, event)
+        self.setCurrentRow(indexSelected)
+        QListWidget.keyPressEvent(self, event)
 
     def update(self):
         index = self.currentIndex()
