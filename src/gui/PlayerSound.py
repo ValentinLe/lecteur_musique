@@ -140,14 +140,16 @@ class PlayerSound(QWidget):
 
     def play(self):
         state = self.player.state()
-        if state == QMediaPlayer.StoppedState or state == QMediaPlayer.PausedState:
-            self.player.play()
-            self.bPlay.setIcon(self.iconPause)
-            self.isPlaying = True
-        else:
-            self.player.pause()
-            self.bPlay.setIcon(self.iconPlay)
-            self.isPlaying = False
+        currentSong = self.board.getCurrentSong()
+        if currentSong:
+            if state == QMediaPlayer.StoppedState or state == QMediaPlayer.PausedState:
+                self.player.play()
+                self.bPlay.setIcon(self.iconPause)
+                self.isPlaying = True
+            else:
+                self.player.pause()
+                self.bPlay.setIcon(self.iconPlay)
+                self.isPlaying = False
 
     def mute(self):
         isMuted = self.player.isMuted()
@@ -209,7 +211,12 @@ class PlayerSound(QWidget):
 
     def update(self):
         song = self.board.getCurrentSong()
-        self.songName.setText(song.getName())
-        self.songAuthor.setText(song.getAuthor())
+        if song:
+            self.songName.setText(song.getName())
+            self.songAuthor.setText(song.getAuthor())
+        else:
+            self.songName.setText("")
+            self.songAuthor.setText("")
+            self.player.stop()
         self.labCurrentDuration.setText(
             getStrDuration(self.player.position()))

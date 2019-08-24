@@ -3,6 +3,7 @@ import sys
 import ctypes
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon, QPixmap, QPalette, QColor
+from model.Board import Board
 from gui.MainWindow import MainWindow
 from gui.ConfigWindow import ConfigWindow
 
@@ -24,12 +25,13 @@ def mainGUI():
     app.setPalette(palette)
 
     # affichage de la fenetre principale
-    window = MainWindow()
+    board = Board()
+    window = MainWindow(board)
     window.setWindowTitle("Musique")
     window.showMaximized()
     # window.show()
-    w = ConfigWindow()
-    # w.show()
+    w = ConfigWindow(board)
+    w.show()
 
     sys.exit(app.exec_())
 

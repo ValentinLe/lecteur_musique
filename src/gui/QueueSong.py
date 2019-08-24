@@ -5,14 +5,16 @@ from .CustomListItem import CustomListItem
 
 
 class QueueSong(QListWidget):
-    def __init__(self, board, queue, otherQueue):
+    def __init__(self, board, getterQueue, getterOtherQueue):
         QListWidget.__init__(self)
 
         self.setProperty("class", "queue")
 
         self.board = board
-        self.queue = queue
-        self.otherQueue = otherQueue
+        self.getterQueue = getterQueue
+        self.getterOtherQueue = getterOtherQueue
+        self.queue = getterQueue()
+        self.otherQueue = getterOtherQueue()
         self.update()
         self.doubleClicked.connect(self.moveSong)
 
@@ -52,6 +54,8 @@ class QueueSong(QListWidget):
     def update(self):
         index = self.currentIndex()
         self.clear()
+        self.queue = self.getterQueue()
+        self.otherQueue = self.getterOtherQueue()
         for k in range(self.queue.size()):
             song = self.queue.getElementAt(k)
             item = CustomListItem(song=song)

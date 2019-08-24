@@ -3,8 +3,10 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QHBoxL
 
 
 class ConfigWindow(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, board, parent=None):
         QWidget.__init__(self, parent)
+
+        self.b = board
 
         self.setGeometry(500, 500, 600, 100)
 
@@ -45,7 +47,7 @@ class ConfigWindow(QWidget):
 
     def acceptModifications(self):
         folder = self.entryPath.text()
-        print(folder)
+        self.b.setDirectory(folder)
         self.close()
 
     def cancelModifications(self):

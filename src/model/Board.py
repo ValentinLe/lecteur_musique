@@ -10,17 +10,29 @@ class Board(ListenableModel):
     def __init__(self):
         ListenableModel.__init__(self)
         self.currentSong = None
+        self.directory = None
         self.primaryQueue = Queue()
         self.secondaryQueue = Queue()
+
+    def getDirectory(self):
+        return self.directory
+
+    def setDirectory(self, directory):
+        self.clearSongs()
+        self.directory = directory
+        self.addSongOfDirectory(directory)
+        self.shuffle(10)
 
     def addSongOfDirectory(self, directory):
         listFiles = listFile(directory)
         for file in listFiles:
             song = Song(directory, file)
-            audio = MP3(song.getFullFilename())
-            song.setDuration(int(audio.info.length * 1000))
-            song.setAuthor(audio.tags["TPE1"].text[0])
-            self.secondaryQueue.add(song)
+            if song.getFormat() == "mp3":
+                audio = MP3(song.getFullFilename())
+                song.setDuration(int(audio.info.length * 1000))
+                song.setAuthor(audio.tags["TPE1"].text[0])
+                self.secondaryQueue.add(song)
+        self.nextSong()
         self.firechange()
 
     def getCurrentSong(self):
@@ -92,7 +104,6 @@ class Board(ListenableModel):
         self.currentSong = None
         self.primaryQueue = Queue()
         self.secondaryQueue = Queue()
-        self.firechange()
 
     def __repr__(self):
         return "Board :\ncurrent=" + str(self.currentSong) + "\nprimary : \n" + str(self.primaryQueue) + "\n\nsecondary : \n" + str(self.secondaryQueue)

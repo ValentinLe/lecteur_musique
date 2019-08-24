@@ -1,22 +1,23 @@
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt5.Qt import Qt
-from model.Board import Board
 from util.Config import Config
+from gui.ConfigWindow import ConfigWindow
 from .QueueSong import QueueSong
 from .PlayerSound import PlayerSound
 from .SearchSong import SearchSong
 
 
 class BoardGUI(QWidget):
-    def __init__(self):
+    def __init__(self, board):
         QWidget.__init__(self)
         config = Config("config/config.conf")
-        self.changePath(config.getValueOf("path"))
+        self.b = board
         self.changeSong = True
-        self.b = Board()
-        self.b.addSongOfDirectory(self.path)
-        self.b.secondaryQueue.shuffle(10)
+        self.b.setDirectory(config.getValueOf("path"))
+
+        w = ConfigWindow(self.b, self)
+        w.show()
 
         self.searchSong = SearchSong(self.b)
 
@@ -24,17 +25,16 @@ class BoardGUI(QWidget):
         labPrimary.setProperty("class", "title")
         labPrimary.setAlignment(Qt.AlignCenter)
         self.primaryQueue = QueueSong(
-            self.b, self.b.getPrimaryQueue(), self.b.getSecondaryQueue())
+            self.b, self.b.getPrimaryQueue, self.b.getSecondaryQueue)
         labSecondary = QLabel("Liste d'attente")
         labSecondary.setProperty("class", "title")
         labSecondary.setAlignment(Qt.AlignCenter)
         self.secondaryQueue = QueueSong(
-            self.b, self.b.getSecondaryQueue(), self.b.getPrimaryQueue())
+            self.b, self.b.getSecondaryQueue, self.b.getPrimaryQueue)
 
         self.b.addListener(self.primaryQueue)
         self.b.addListener(self.secondaryQueue)
 
-        self.b.nextSong()
         self.player = PlayerSound(self.b)
         self.b.addListener(self.player)
 
@@ -90,6 +90,3 @@ class BoardGUI(QWidget):
         indexSelected = self.secondaryQueue.getIndexSelected()
         if indexSelected >= 0:
             self.b.moveSongOfIndexToPrimary(indexSelected)
-
-    def changePath(self, newPath):
-        self.path = newPath
