@@ -25,7 +25,7 @@ class ConfigWindow(QWidget):
         bBrowsePath = QPushButton("Parcourir...")
         bBrowsePath.clicked.connect(self.selectPath)
 
-        bAccept = QPushButton("Ok")
+        bAccept = QPushButton("Valider")
         bAccept.setProperty("class", "specialButton")
         bAccept.clicked.connect(self.acceptModifications)
         bCancel = QPushButton("Annuler")
