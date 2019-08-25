@@ -1,4 +1,5 @@
 
+from os.path import expanduser
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QHBoxLayout, QDesktopWidget, QFileDialog, QLabel
 from util.Config import Config
 
@@ -51,7 +52,8 @@ class ConfigWindow(QWidget):
         layout.addLayout(layoutBottom)
 
     def selectPath(self):
-        folder = QFileDialog.getExistingDirectory(self, 'Select directory')
+        folder = QFileDialog.getExistingDirectory(
+            self, 'Select directory', expanduser("~"))
         if folder:
             self.entryPath.setText(folder)
 
