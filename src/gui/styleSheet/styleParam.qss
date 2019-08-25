@@ -31,3 +31,8 @@ QLineEdit {
     border: 0;
     border-radius: 4px;
 }
+
+QLabel {
+    font-weight: bold;
+    padding: 8px;
+}

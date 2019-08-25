@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QHBoxLayout, QDesktopWidget, QFileDialog
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QHBoxLayout, QDesktopWidget, QFileDialog, QLabel
 from util.Config import Config
 
 
@@ -16,6 +16,7 @@ class ConfigWindow(QWidget):
         qtRectangle.moveCenter(centerPoint)
         self.move(qtRectangle.topLeft())
 
+        labPath = QLabel("Chemin des musiques :")
         self.entryPath = QLineEdit()
         path = self.config.getValueOf("path")
         if path:
@@ -36,13 +37,16 @@ class ConfigWindow(QWidget):
         layoutPath = QHBoxLayout()
         layoutPath.addWidget(self.entryPath)
         layoutPath.addWidget(bBrowsePath)
+        layoutLabEntry = QVBoxLayout()
+        layoutLabEntry.addWidget(labPath)
+        layoutLabEntry.addLayout(layoutPath)
 
         layoutBottom = QHBoxLayout()
         layoutBottom.addStretch()
         layoutBottom.addWidget(bAccept)
         layoutBottom.addWidget(bCancel)
 
-        layout.addLayout(layoutPath)
+        layout.addLayout(layoutLabEntry)
         layout.addStretch()
         layout.addLayout(layoutBottom)
 

@@ -157,7 +157,9 @@ class PlayerSound(QWidget):
         state = self.player.state()
         currentSong = self.board.getCurrentSong()
         if currentSong:
-            if state == QMediaPlayer.StoppedState or state == QMediaPlayer.PausedState:
+            if state == QMediaPlayer.PausedState or state == QMediaPlayer.StoppedState:
+                if state == QMediaPlayer.StoppedState:
+                    self.setSongInPlayer()
                 self.player.play()
                 self.bPlay.setIcon(self.iconPause)
                 self.isPlaying = True
@@ -241,5 +243,7 @@ class PlayerSound(QWidget):
             self.songName.setText("")
             self.songAuthor.setText("")
             self.player.stop()
+            self.bPlay.setIcon(self.iconPlay)
+            self.isPlaying = False
         self.labCurrentDuration.setText(
             getStrDuration(self.player.position()))
