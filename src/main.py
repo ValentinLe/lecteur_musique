@@ -10,10 +10,13 @@ from gui.MainWindow import MainWindow
 def mainGUI():
     app = QApplication(sys.argv)
 
-    # ajout de l'id de l'application
-    myappid = 'ValentinLe.lecteur_musique'
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
-
+    try:
+        # ajout de l'id de l'application
+        myappid = 'ValentinLe.lecteur_musique'
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    except AttributeError:
+        pass
+    
     # ajout de l'icone de l'application
     app.setWindowIcon(QIcon(QPixmap("assets/logo.ico")))
 

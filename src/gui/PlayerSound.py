@@ -42,13 +42,13 @@ class PlayerSound(QWidget):
         self.player.positionChanged.connect(self.changeSliderPosition)
 
         bShuffle = QPushButton()
-        bShuffle.setToolTip("Mélanger la liste d'attente")
+        bShuffle.setToolTip("Melanger la liste d'attente")
         bShuffle.setFixedSize(iconSize)
         bShuffle.setIcon(iconShuffle)
         bShuffle.setIconSize(iconSize)
         bShuffle.clicked.connect(self.shuffle)
         bPrecedent = QPushButton()
-        bPrecedent.setToolTip("Musique précédente")
+        bPrecedent.setToolTip("Musique precedente")
         bPrecedent.setFixedSize(iconSize)
         bPrecedent.setIcon(iconPrecedent)
         bPrecedent.setIconSize(iconSize)
@@ -91,7 +91,7 @@ class PlayerSound(QWidget):
         self.volumeSlider.valueChanged.connect(self.changeVolume)
 
         bParams = QPushButton()
-        bParams.setToolTip("Paramètres")
+        bParams.setToolTip("Parametres")
         bParams.setFixedSize(iconSize)
         bParams.setIcon(iconConfig)
         bParams.setIconSize(iconSize)
@@ -235,7 +235,7 @@ class PlayerSound(QWidget):
         w.setCentralWidget(ConfigWindow(self.board, w))
         w.setGeometry(650, 500, 600, 150)
         w.setStyleSheet(open("src/gui/styleSheet/styleParam.qss", "r").read())
-        w.setWindowTitle("Paramètres")
+        w.setWindowTitle("Parametres")
         w.show()
 
     def update(self):
