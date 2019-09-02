@@ -1,5 +1,17 @@
 
 class Song():
+    '''
+    Classe representant une musique
+
+    :param path: le chemin du dossier dans lequel trouver la musique
+    :type path: str
+    :param filename: le nom du fichier dans le dossier ou il se trouve (sans le chemin)
+    :type filename: str
+    :param author: l'auteur de la musique
+    :type author: str
+    :param duration: la duree en ms de la musique
+    :type duration: int
+    '''
     def __init__(self, path, filename, author="Unknown", duration=0):
         self.path = path
         self.filename = filename
