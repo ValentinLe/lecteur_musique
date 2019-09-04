@@ -33,7 +33,10 @@ class Config():
         :return: la valeur de la configuration
         :rtype: str
         '''
-        return self.configMap[configName]
+        if configName in self.configMap:
+            return self.configMap[configName]
+        else:
+            return None
 
     def setValueOf(self, configName, value):
         '''
@@ -46,10 +49,13 @@ class Config():
         '''
         self.configMap[configName] = value
 
+    def deleteConfig(self, configName):
+        ''' supprime une config donnee '''
+        if configName in self.configMap:
+            del self.configMap[configName]
+
     def save(self):
-        '''
-        permet de sauvegarder les configurations dans son fichier
-        '''
+        ''' permet de sauvegarder les configurations dans son fichier '''
         file = open(self.configFile, "w")
         res = ""
         separator = "="

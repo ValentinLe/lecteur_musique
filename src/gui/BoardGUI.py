@@ -1,4 +1,5 @@
 
+import os.path
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt5.Qt import Qt
 from util.Config import Config
@@ -23,7 +24,12 @@ class BoardGUI(QWidget):
         # boolean qui permet d'éviter un double appel par keyPressEvent
         self.changeSong = True
 
-        self.b.setDirectory(config.getValueOf("path"))
+        path = config.getValueOf("path")
+        if path and os.path.exists(path):
+            self.b.setDirectory(path)
+        else:
+            config.deleteConfig("path")
+            config.save()
 
         # zone de recherche a gauche
         self.searchSong = SearchSong(self.b)

@@ -38,16 +38,20 @@ class PlayerSound(QWidget):
 
         self.board = board
         self.isPlaying = False
-        self.isChangingPosition = None
 
         # lecteur Qt et musique en cours
         currentSong = self.board.getCurrentSong()
         self.player = QMediaPlayer()
-        self.songName = QLabel(currentSong.getName())
-        self.songName.setProperty("class", "songName")
+        nameSong = ""
+        nameAuthor = ""
+        if currentSong:
+            nameSong = currentSong.getName()
+            nameAuthor = currentSong.getAuthor()
+        self.songName = QLabel(nameSong)
+        self.songAuthor = QLabel(nameAuthor)
         self.songName.setWordWrap(True)
         self.songName.setFixedWidth(310)
-        self.songAuthor = QLabel(currentSong.getAuthor())
+        self.songName.setProperty("class", "songName")
         self.songAuthor.setProperty("class", "author")
         self.player.mediaStatusChanged.connect(self.mediaFinished)
         self.player.positionChanged.connect(self.changeSliderPosition)
