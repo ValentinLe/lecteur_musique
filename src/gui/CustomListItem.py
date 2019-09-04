@@ -5,6 +5,13 @@ from util.StringDuration import getStrDuration
 
 
 class CustomListItem(QWidget):
+    '''
+    ligne customiser d'une QListWidget qui correspond a une musique
+
+    :param song: la musique a representer
+    :type song: model.Song
+    '''
+
     def __init__(self, parent=None, song=None):
         super(CustomListItem, self).__init__(parent)
         layout = QHBoxLayout()

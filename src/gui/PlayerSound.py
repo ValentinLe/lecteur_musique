@@ -8,13 +8,22 @@ from gui.ConfigWindow import ConfigWindow
 
 
 class PlayerSound(QWidget):
+    '''
+    represente le lecteur de musique, permettant de mettre pause/play, changer de musique, etc.
+
+    :param board: le tableau de bord du lecteur
+    :type board: model.Board
+    '''
+
     def __init__(self, board, parent=None):
         QWidget.__init__(self, parent)
 
+        # hauteur du lecteur
         heightWindow = 125
         self.setMinimumHeight(heightWindow)
         self.setMaximumHeight(heightWindow)
 
+        # images des bouttons
         self.iconPlay = QIcon(QPixmap("assets/play.png"))
         self.iconPause = QIcon(QPixmap("assets/pause.png"))
         iconNext = QIcon(QPixmap("assets/next.png"))
@@ -24,12 +33,14 @@ class PlayerSound(QWidget):
         self.iconSoundOn = QIcon(QPixmap("assets/soundOn.png"))
         self.iconSoundOff = QIcon(QPixmap("assets/soundOff.png"))
         iconConfig = QIcon(QPixmap("assets/config.png"))
+        # taille des bouttons
         iconSize = QSize(50, 50)
 
         self.board = board
         self.isPlaying = False
         self.isChangingPosition = None
 
+        # lecteur Qt et musique en cours
         currentSong = self.board.getCurrentSong()
         self.player = QMediaPlayer()
         self.songName = QLabel(currentSong.getName())
@@ -41,6 +52,7 @@ class PlayerSound(QWidget):
         self.player.mediaStatusChanged.connect(self.mediaFinished)
         self.player.positionChanged.connect(self.changeSliderPosition)
 
+        # bouttons au dessus de la barre de progression de la lecture de la musique
         bShuffle = QPushButton()
         bShuffle.setToolTip("Melanger la liste d'attente")
         bShuffle.setFixedSize(iconSize)
@@ -70,6 +82,7 @@ class PlayerSound(QWidget):
         bReplay.setIconSize(iconSize)
         bReplay.clicked.connect(self.replay)
 
+        # barre de progression de la lecture de la musique en cours
         self.sliderSong = QSlider(Qt.Horizontal)
         self.sliderSong.setMinimumWidth(600)
         self.sliderSong.setMaximumWidth(600)
@@ -79,6 +92,7 @@ class PlayerSound(QWidget):
         self.labMaxDuration = QLabel("0:00")
         self.labMaxDuration.setProperty("class", "duration")
 
+        # controles sur le son de la musique
         self.bMute = QPushButton()
         self.bMute.setIcon(self.iconSoundOn)
         self.bMute.setFixedSize(iconSize)
@@ -90,14 +104,13 @@ class PlayerSound(QWidget):
         self.volumeSlider.setValue(100)
         self.volumeSlider.valueChanged.connect(self.changeVolume)
 
+        # boutton pour ouvrir la fenetre de parametres
         bParams = QPushButton()
         bParams.setToolTip("Parametres")
         bParams.setFixedSize(iconSize)
         bParams.setIcon(iconConfig)
         bParams.setIconSize(iconSize)
         bParams.clicked.connect(self.openParams)
-
-        self.setSongInPlayer()
 
         # position elements
 
@@ -200,31 +213,17 @@ class PlayerSound(QWidget):
             self.player.play()
 
     def setSongInPlayer(self):
+        ''' set la musique courante dans le lecteur Qt '''
         song = self.board.getCurrentSong()
         url = QUrl.fromLocalFile(song.getFullFilename())
         self.player.setMedia(QMediaContent(url))
+        # set du temps maximum pour la barre de progression
         self.sliderSong.setMaximum(song.getDuration())
         self.labMaxDuration.setText(getStrDuration(song.getDuration()))
 
     def changeSliderPosition(self, position):
         self.sliderSong.setValue(position)
         self.update()
-
-    def getPositionPlayer(self, positionSlider):
-        maxDuration = self.player.duration()
-        durationSong = self.board.getCurrentSong().getDuration()
-        if durationSong != 0:
-            return positionSlider * maxDuration // durationSong
-        else:
-            return 0
-
-    def getPositionSlider(self, positionPlayer):
-        maxDuration = self.player.duration()
-        durationSong = self.board.getCurrentSong().getDuration()
-        if maxDuration != 0:
-            return positionPlayer * durationSong // maxDuration
-        else:
-            return 0
 
     def changeVolume(self):
         valueVolume = self.volumeSlider.value()

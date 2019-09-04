@@ -4,6 +4,13 @@ from .BoardGUI import BoardGUI
 
 
 class MainWindow(QMainWindow):
+    '''
+    Fenetre principale du lecteur
+
+    :param board: le tableau de bord du lecteur
+    :type board: model.Board
+    '''
+
     def __init__(self, board, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setGeometry(700, 200, 800, 500)

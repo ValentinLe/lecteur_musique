@@ -66,6 +66,24 @@ class Board(ListenableModel):
     def getSecondaryQueue(self):
         return self.secondaryQueue
 
+    def getOrderListFilterSong(self, filterName):
+        ''' donne la liste des musiques filtrees ou non dans l'ordre alphabetique '''
+        listSong = []
+        # si le filtre correspond au nom ou auteur d'une musique de la liste prioritaire
+        for song in self.getPrimaryQueue().getListElements():
+            if filterName in song.getName().lower() or filterName in song.getAuthor().lower():
+                listSong.append(song)
+        # si le filtre correspond au nom ou auteur d'une musique de la liste secondaire
+        for song in self.getSecondaryQueue().getListElements():
+            if filterName in song.getName().lower() or filterName in song.getAuthor().lower():
+                listSong.append(song)
+        # si le filtre correspond au nom ou auteur de la musique courrante
+        if self.currentSong and (filterName in self.currentSong.getName().lower() or
+                                 filterName in self.currentSong.getAuthor().lower()):
+            listSong.append(self.currentSong)
+        listSong.sort()
+        return listSong
+
     def getSongAt(self, queue, index):
         '''
         donne la musique dans la liste d'attente donnee a la position donnee

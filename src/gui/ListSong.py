@@ -4,6 +4,13 @@ from .CustomListItem import CustomListItem
 
 
 class ListSong(QListWidget):
+    '''
+    representant la liste des musiques dans l'ordre alphabetique pouvant etre filtrees
+
+    :param board: le tableau de bord du lecteur
+    :type board: model.Board
+    '''
+
     def __init__(self, board):
         QListWidget.__init__(self)
 
@@ -17,21 +24,8 @@ class ListSong(QListWidget):
         self.doubleClicked.connect(self.addSongToPrimary)
         self.setFilterName(self.filterName)
 
-    def getOrderListFilterSong(self):
-        listSong = []
-        for song in self.board.getPrimaryQueue().getListElements():
-            if self.filterName in song.getName().lower() or self.filterName in song.getAuthor().lower():
-                listSong.append(song)
-        for song in self.board.getSecondaryQueue().getListElements():
-            if self.filterName in song.getName().lower() or self.filterName in song.getAuthor().lower():
-                listSong.append(song)
-        currentSong = self.board.getCurrentSong()
-        if currentSong and (self.filterName in currentSong.getName().lower() or self.filterName in currentSong.getAuthor().lower()):
-            listSong.append(currentSong)
-        listSong.sort()
-        return listSong
-
     def addSongToPrimary(self, event):
+        ''' ajoute la musique selectionnee dans la liste prioritaire '''
         index = self.currentRow()
         song = self.listFilteredSong[index]
         self.board.moveSongToPrimary(song)
@@ -41,9 +35,12 @@ class ListSong(QListWidget):
         self.update()
 
     def update(self):
-        self.listFilteredSong = self.getOrderListFilterSong()
+        self.listFilteredSong = self.board.getOrderListFilterSong(
+            self.filterName)
+        # on vide la liste des widgets
         self.clear()
         for song in self.listFilteredSong:
+            # on la remplie avec les musiques qui ont passees le filtre
             item = CustomListItem(song=song)
             listItem = QListWidgetItem(self)
             listItem.setSizeHint(item.sizeHint())
