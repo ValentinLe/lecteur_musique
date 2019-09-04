@@ -16,9 +16,9 @@ def mainGUI():
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
     except AttributeError:
         pass
-    
+
     # ajout de l'icone de l'application
-    app.setWindowIcon(QIcon(QPixmap("assets/logo.ico")))
+    app.setWindowIcon(QIcon(QPixmap("assets/logo.png")))
 
     # couleurs pour la scrollBar
     palette = QPalette()
