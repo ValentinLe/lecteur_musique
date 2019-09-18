@@ -64,7 +64,6 @@ class PlayerSound(QWidget):
         bShuffle.setIconSize(iconSize)
         bShuffle.clicked.connect(self.shuffle)
         bPrecedent = QPushButton()
-        bPrecedent.setToolTip("Musique precedente")
         bPrecedent.setFixedSize(iconSize)
         bPrecedent.setIcon(iconPrecedent)
         bPrecedent.setIconSize(iconSize)

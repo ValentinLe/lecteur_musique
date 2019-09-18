@@ -18,7 +18,7 @@ def mainGUI():
         pass
 
     # ajout de l'icone de l'application
-    app.setWindowIcon(QIcon(QPixmap("assets/logo.png")))
+    app.setWindowIcon(QIcon(QPixmap("assets/logo.ico")))
 
     # couleurs pour la scrollBar
     palette = QPalette()
