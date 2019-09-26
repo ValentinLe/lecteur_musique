@@ -31,7 +31,7 @@ class Board(ListenableModel):
         '''
         # on vide les listes d'attentes et la musique courrante
         self.clearSongs()
-        # on set le repertoire et on ajoute toutes les musiques qui sont présentes
+        # on set le repertoire et on ajoute toutes les musiques qui sont presentes
         self.directory = directory
         self.addSongOfDirectory(directory)
         # on melange et on prend la premiere musique de la liste pour que la musique courante
@@ -92,8 +92,7 @@ class Board(ListenableModel):
         :type queue: util.Queue
         :param index: la position de la musique que l'ont souhaite
         :type index: int
-        :return: la musique à la position donnee ou None si la postion n'est pas dans l'intervalle
-        de la liste d'attente
+        :return: la musique a la position donnee ou None si la position n'est pas dans l'interval de la liste d'attente
         :rtype: model.Song
         '''
         return queue.getElementAt(index)

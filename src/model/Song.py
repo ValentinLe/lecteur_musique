@@ -79,7 +79,7 @@ class Song():
         '''
         setter sur l'auteur de la musique
 
-        :param author: l'auteur à setter à la musique
+        :param author: l'auteur a setter a la musique
         :type author: str
         '''
         self.author = author
@@ -88,7 +88,7 @@ class Song():
         '''
         setter sur la duree de la musique
 
-        :param duration: la duree à setter à la musique
+        :param duration: la duree a setter a la musique
         :type duration: int
         '''
         self.duration = duration

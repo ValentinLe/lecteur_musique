@@ -21,7 +21,7 @@ class BoardGUI(QWidget):
         config = Config("config/config.conf")
         self.b = board
 
-        # boolean qui permet d'éviter un double appel par keyPressEvent
+        # boolean qui permet d'eviter un double appel par keyPressEvent
         self.changeSong = True
 
         path = config.getValueOf("path")
