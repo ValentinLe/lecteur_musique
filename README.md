@@ -1,6 +1,6 @@
 # lecteur_musique
 
-![Apparence lecteur](https://github.com/ValentinLe/lecteur_musique/blob/master/screenshots/lecteur.png)
+![Demo](https://github.com/ValentinLe/lecteur_musique/blob/master/screenshots/demo.gif)
 
 ## Contrôles
 - Double clic sur une musique pour la faire changer de liste (double clic sur une musique de la liste d'attente pour la mettre à la suite de la liste d'attente prioritaire et inversement).
@@ -9,3 +9,6 @@
 - Ctrl + Gauche/Droite pour déplacer la musique de liste d'attente.
 - Delete pour effacer le texte de la recherche.
 - Entrer pour changer la musique sélectionnée de liste.
+
+## Notes
+- lecture de fichiers MP3 uniquement.
