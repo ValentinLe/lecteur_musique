@@ -1,8 +1,6 @@
 # lecteur_musique
 
-<video width="320" height="200" controls preload> 
-    <source src="https://github.com/ValentinLe/lecteur_musique/blob/master/screenshots/demo.mp4"></source>
-</video>
+[![Watch the video](https://github.com/ValentinLe/lecteur_musique/blob/master/screenshots/lecteur.png)](https://github.com/ValentinLe/lecteur_musique/blob/master/screenshots/demo.mp4)
 
 ## Contrôles
 - Double clic sur une musique pour la faire changer de liste (double clic sur une musique de la liste d'attente pour la mettre à la suite de la liste d'attente prioritaire et inversement).
