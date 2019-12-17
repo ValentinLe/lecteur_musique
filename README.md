@@ -1,6 +1,16 @@
 # lecteur_musique
 
-![Demo](https://github.com/ValentinLe/lecteur_musique/blob/master/screenshots/demo.gif)
+Logiciel qui permet de programmer la lecture de musiques dans l'ordre souhaité. L'utilisateur peut choisir un dossier dans lequel sont placés ces musiques, elles seront donc placées dans la liste d'attente (à droite). Il pourra déplacer les prochaines musiques qu'il souhaite entendre dans la liste d'attente prioritaire (au centre), pour cela il fera un double-clic sur la musique (dans la liste d'attente ou dans la liste de recherche).
+
+- Demo
+<div align="center">
+<img src="https://github.com/ValentinLe/lecteur_musique/blob/master/screenshots/demo.gif" alt="demo">
+</div>
+
+- Menu de paramètres
+<div align="center">
+<img src="https://github.com/ValentinLe/lecteur_musique/blob/master/screenshots/parametres.PNG" alt="parametres">
+</div>
 
 ## Contrôles
 - Double clic sur une musique pour la faire changer de liste (double clic sur une musique de la liste d'attente pour la mettre à la suite de la liste d'attente prioritaire et inversement).
