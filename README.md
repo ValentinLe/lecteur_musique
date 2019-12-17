@@ -1,6 +1,6 @@
 # lecteur_musique
 
-Logiciel qui permet de programmer la lecture de musiques dans l'ordre souhaité. L'utilisateur peut choisir un dossier dans lequel sont placés ces musiques, elles seront donc placées dans la liste d'attente (à droite). Il pourra déplacer les prochaines musiques qu'il souhaite entendre dans la liste d'attente prioritaire (au centre), pour cela il fera un double-clic sur la musique (dans la liste d'attente ou dans la liste de recherche).
+Logiciel qui permet de programmer la lecture de musiques dans l'ordre souhaité. L'utilisateur peut choisir un dossier dans lequel sont placés ces musiques, elles se retrouverons dans la liste d'attente du logiciel (à droite). Il pourra déplacer les prochaines musiques qu'il souhaite entendre dans la liste d'attente prioritaire (au centre), pour cela il fera un double-clic sur la musique (dans la liste d'attente ou dans la liste de recherche).
 
 - Demo
 <div align="center">
