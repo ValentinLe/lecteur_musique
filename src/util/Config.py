@@ -1,4 +1,8 @@
 
+import os
+import os.path
+
+
 class Config():
     '''
     Classe representant l'ensembles des configurations
@@ -6,6 +10,8 @@ class Config():
 
     def __init__(self, configFile):
         self.configFile = configFile
+        if not os.path.exists(os.path.dirname(configFile)):
+            os.makedirs(os.path.dirname(configFile))
         self.configMap = self.findConfig({})
 
     def findConfig(self, configMap):
@@ -17,11 +23,12 @@ class Config():
         :return: la map des configurations remplie
         :rtype: dict
         '''
-        file = open(self.configFile, "r")
-        for line in file:
-            couple = line.split("=")
-            configMap[couple[0]] = couple[1]
-        file.close()
+        if os.path.exists(self.configFile):
+            file = open(self.configFile, "r")
+            for line in file:
+                couple = line.split("=")
+                configMap[couple[0]] = couple[1]
+            file.close()
         return configMap
 
     def getValueOf(self, configName):
