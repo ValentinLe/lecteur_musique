@@ -105,6 +105,12 @@ class Board(ListenableModel):
         ''' donne la musique de la liste d'attente secondaire a l'index donnee '''
         return self.getSongAt(self.secondaryQueue, index)
 
+    def getSumDuration(self, queue):
+        duration = 0
+        for song in queue:
+            duration += song.getDuration()
+        return duration
+
     def nextSong(self):
         ''' fait passer a la musique suivante '''
         if self.currentSong:

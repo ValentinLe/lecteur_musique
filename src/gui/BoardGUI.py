@@ -3,6 +3,7 @@ import os.path
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt5.Qt import Qt
 from util.Config import Config
+from util.StringDuration import getStrDuration
 from .QueueSong import QueueSong
 from .PlayerSound import PlayerSound
 from .SearchSong import SearchSong
@@ -35,9 +36,10 @@ class BoardGUI(QWidget):
         self.searchSong = SearchSong(self.b)
 
         # liste d'attente prioritaire
-        labPrimary = QLabel("Liste d'attente prioritaire")
-        labPrimary.setProperty("class", "title")
-        labPrimary.setAlignment(Qt.AlignCenter)
+        self.textLabelPrimary = "Liste d'attente prioritaire"
+        self.labPrimary = QLabel(self.textLabelPrimary)
+        self.labPrimary.setProperty("class", "title")
+        self.labPrimary.setAlignment(Qt.AlignCenter)
         self.primaryQueue = QueueSong(
             self.b, self.b.getPrimaryQueue, self.b.getSecondaryQueue)
 
@@ -64,7 +66,7 @@ class BoardGUI(QWidget):
         queueSongs.addWidget(self.searchSong)
 
         primaryQueueLayout = QVBoxLayout()
-        primaryQueueLayout.addWidget(labPrimary)
+        primaryQueueLayout.addWidget(self.labPrimary)
         primaryQueueLayout.addWidget(self.primaryQueue)
 
         secondaryQueueLayout = QVBoxLayout()
@@ -76,6 +78,8 @@ class BoardGUI(QWidget):
 
         layout.addLayout(queueSongs)
         layout.addWidget(self.player)
+
+        self.b.addListener(self)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Delete:
@@ -113,3 +117,13 @@ class BoardGUI(QWidget):
             else:
                 # capture d'un du double appel sur l'event Key_MediaPrevious ou Key_MediaNext
                 self.changeSong = True
+
+    def update(self):
+        duration = self.b.getSumDuration(
+            self.b.getPrimaryQueue().getListElements())
+        if duration > 0:
+            textLab = self.textLabelPrimary + \
+                " (" + getStrDuration(duration) + ")"
+        else:
+            textLab = self.textLabelPrimary
+        self.labPrimary.setText(textLab)
